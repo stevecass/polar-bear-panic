@@ -247,6 +247,7 @@ module.exports = GameOver;
 
       // CREATING AND ADDING A NEW GROUND
       this.ground = new Ground(this.game, 0, 550, 6400, 100);
+
       this.game.add.existing(this.ground);
 
       this.game.add.existing(this.bear);
