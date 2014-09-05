@@ -13,7 +13,7 @@ Preload.prototype = {
     this.asset.anchor.setTo(0.5, 0.5);
     this.load.setPreloadSprite(this.asset);
 
-    this.load.image('background', 'assets/background.jpg');
+    this.load.image('background', 'assets/wintertiles.jpg');
     this.load.image('ground', 'assets/ground.png');
     this.load.image('title', 'assets/title.png');
     this.load.image('startButton', 'assets/start-button.png');
