@@ -11,7 +11,7 @@ window.onload = function () {
   game.state.add('menu', require('./states/menu'));
   game.state.add('play', require('./states/play'));
   game.state.add('preload', require('./states/preload'));
-
+  
 
   game.state.start('boot');
 };
@@ -39,6 +39,7 @@ Bear.prototype.runRight = function(){
 };
 
 Bear.prototype.decelerateRight = function(){
+  console.log(this.body.velocity.x);
   if (this.body.velocity.x === 150){
   this.body.velocity.x = 125;
   setTimeout((function(){this.body.velocity.x = 100}).bind(this), 800);
@@ -83,7 +84,6 @@ module.exports = Bear;
 var Ground = function(game, x, y, width, height) {
   Phaser.TileSprite.call(this, game, x, y, width, height, 'ground');
   // start scrolling our ground
-  this.autoScroll(-200,0);
 
   // enable physics on the ground sprite
   // this is needed for collision detection
@@ -246,7 +246,8 @@ module.exports = GameOver;
       this.bear = new Bear(this.game, 100, this.game.height/2);
 
       // CREATING AND ADDING A NEW GROUND
-      this.ground = new Ground(this.game, 0, 400, 800, 200);
+      this.ground = new Ground(this.game, 0, 550, 6400, 100);
+
       this.game.add.existing(this.ground);
 
       this.game.add.existing(this.bear);

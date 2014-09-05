@@ -25,7 +25,8 @@
       this.bear = new Bear(this.game, 100, this.game.height/2);
 
       // CREATING AND ADDING A NEW GROUND
-      this.ground = new Ground(this.game, 0, 400, 800, 200);
+      this.ground = new Ground(this.game, 0, 550, 6400, 100);
+
       this.game.add.existing(this.ground);
 
       this.game.add.existing(this.bear);

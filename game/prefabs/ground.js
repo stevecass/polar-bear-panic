@@ -4,7 +4,6 @@
 var Ground = function(game, x, y, width, height) {
   Phaser.TileSprite.call(this, game, x, y, width, height, 'ground');
   // start scrolling our ground
-  this.autoScroll(-200,0);
 
   // enable physics on the ground sprite
   // this is needed for collision detection
