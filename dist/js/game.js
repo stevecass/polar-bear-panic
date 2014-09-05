@@ -35,11 +35,34 @@ Bear.prototype = Object.create(Phaser.Sprite.prototype);
 Bear.prototype.constructor = Bear;
 
 Bear.prototype.runRight = function(){
-  this.body.velocity.x = 200;
+  this.body.velocity.x = 150;
+};
+
+Bear.prototype.decelerateRight = function(){
+  console.log(this.body.velocity.x);
+  if (this.body.velocity.x === 150){
+  this.body.velocity.x = 125;
+  setTimeout((function(){this.body.velocity.x = 100}).bind(this), 800);
+  setTimeout((function(){this.body.velocity.x = 75}).bind(this), 1600);
+  setTimeout((function(){this.body.velocity.x = 50}).bind(this), 2400);
+  setTimeout((function(){this.body.velocity.x = 25}).bind(this), 3200);
+  setTimeout((function(){this.body.velocity.x = 0}).bind(this), 4000);
+  }
 };
 
 Bear.prototype.runLeft = function(){
-  this.body.velocity.x = -200;
+  this.body.velocity.x = -150;
+};
+
+Bear.prototype.decelerateLeft = function(){
+  if (this.body.velocity.x === -150){
+    this.body.velocity.x = -125;
+    setTimeout((function(){this.body.velocity.x = -100}).bind(this), 800);
+    setTimeout((function(){this.body.velocity.x = -75}).bind(this), 1600);
+    setTimeout((function(){this.body.velocity.x = -50}).bind(this), 2400);
+    setTimeout((function(){this.body.velocity.x = -25}).bind(this), 3200);
+    setTimeout((function(){this.body.velocity.x = 0}).bind(this), 4000);
+  }
 };
 
 Bear.prototype.jump = function(){
@@ -195,20 +218,22 @@ module.exports = GameOver;
         ]);
 
       var runRight = this.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-          runRight.onDown.add(this.bear.runRight, this.bear);
+      runRight.onDown.add(this.bear.runRight, this.bear);
+      runRight.onUp.add(this.bear.decelerateRight, this.bear)
 
-      this.input.onDown.add(this.bear.runRight, this.bear);
+      // this.input.onDown.add(this.bear.runRight, this.bear);
 
-       var runLeft = this.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-          runLeft.onDown.add(this.bear.runLeft, this.bear);
+      var runLeft = this.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+      runLeft.onDown.add(this.bear.runLeft, this.bear);
+      runLeft.onUp.add(this.bear.decelerateLeft, this.bear);
 
-      this.input.onDown.add(this.bear.runLeft, this.bear);
+      // this.input.onDown.add(this.bear.runLeft, this.bear);
 
 
-       var jump = this.input.keyboard.addKey(Phaser.Keyboard.UP);
-          jump.onDown.add(this.bear.jump, this.bear);
+      var jump = this.input.keyboard.addKey(Phaser.Keyboard.UP);
+      jump.onDown.add(this.bear.jump, this.bear);
 
-      this.input.onDown.add(this.bear.jump, this.bear);
+      // this.input.onDown.add(this.bear.jump, this.bear);
 
      },
 
