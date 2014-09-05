@@ -40,6 +40,7 @@
       // this.input.onDown.add(this.bear.runLeft, this.bear);
 
 
+
        var jump = this.input.keyboard.addKey(Phaser.Keyboard.UP);
           jump.onDown.add(this.bear.jump, this.bear);
 
