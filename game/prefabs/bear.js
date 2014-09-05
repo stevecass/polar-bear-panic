@@ -9,7 +9,7 @@ var Bear = function(game, x, y, frame) {
 
   this.body.bounce.y = 0.2;
   this.body.gravity.y = 300;
-  this.body.collideWorldBounds = true;
+  this.body.collideWorldBounds = false;
 
 };
 
@@ -48,7 +48,7 @@ Bear.prototype.decelerateLeft = function(){
 };
 
 Bear.prototype.jump = function(){
-  this.body.velocity.y = -400;
+    this.body.velocity.y = -400
 };
 
 Bear.prototype.update = function() {

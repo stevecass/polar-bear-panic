@@ -15,7 +15,7 @@ window.onload = function () {
 
   game.state.start('boot');
 };
-},{"./states/boot":3,"./states/gameover":4,"./states/menu":5,"./states/play":6,"./states/preload":7}],2:[function(require,module,exports){
+},{"./states/boot":4,"./states/gameover":5,"./states/menu":6,"./states/play":7,"./states/preload":8}],2:[function(require,module,exports){
 'use strict';
 
 var Bear = function(game, x, y, frame) {
@@ -27,7 +27,7 @@ var Bear = function(game, x, y, frame) {
 
   this.body.bounce.y = 0.2;
   this.body.gravity.y = 300;
-  this.body.collideWorldBounds = true;
+  this.body.collideWorldBounds = false;
 
 };
 
@@ -66,7 +66,7 @@ Bear.prototype.decelerateLeft = function(){
 };
 
 Bear.prototype.jump = function(){
-  this.body.velocity.y = -400;
+    this.body.velocity.y = -400
 };
 
 Bear.prototype.update = function() {
@@ -78,6 +78,37 @@ Bear.prototype.update = function() {
 module.exports = Bear;
 
 },{}],3:[function(require,module,exports){
+/* Full tutorial: http://codevinsky.ghost.io/phaser-2-0-tutorial-flappy-bird-part-2/ */
+'use strict';
+
+var Ground = function(game, x, y, width, height) {
+  Phaser.TileSprite.call(this, game, x, y, width, height, 'ground');
+  // start scrolling our ground
+
+  // enable physics on the ground sprite
+  // this is needed for collision detection
+  this.game.physics.arcade.enableBody(this);
+
+  // we don't want the ground's body
+  // to be affected by gravity or external forces
+  this.body.allowGravity = false;
+  this.body.immovable = true;
+
+
+};
+
+Ground.prototype = Object.create(Phaser.TileSprite.prototype);
+Ground.prototype.constructor = Ground;
+
+Ground.prototype.update = function() {
+
+  // write your prefab's specific update code here
+
+};
+
+module.exports = Ground;
+
+},{}],4:[function(require,module,exports){
 
 'use strict';
 
@@ -96,7 +127,7 @@ Boot.prototype = {
 
 module.exports = Boot;
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 
 'use strict';
 function GameOver() {}
@@ -124,7 +155,7 @@ GameOver.prototype = {
 };
 module.exports = GameOver;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
  /* Full tutorial: http://codevinsky.ghost.io/phaser-2-0-tutorial-flappy-bear-part-1/ */
   'use strict';
   function Menu() {}
@@ -187,11 +218,12 @@ module.exports = GameOver;
 
   module.exports = Menu;
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 
   'use strict';
 
   var Bear = require('../prefabs/bear');
+  var Ground = require('../prefabs/ground');
   // var game = new Phaser.Game();
   var cursors;
   var bear;
@@ -204,12 +236,23 @@ module.exports = GameOver;
 
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
       this.game.physics.arcade.gravity.y = 300;
+
+      // SETTING BOUNDS
+      this.game.world.setBounds(0, 0, 6400, 600);
+
       // this.game.physics.arcade.gravity.x = -200;
       this.background = this.game.add.sprite(0,0,'background');
 
       this.bear = new Bear(this.game, 100, this.game.height/2);
 
+      // CREATING AND ADDING A NEW GROUND
+      this.ground = new Ground(this.game, 0, 550, 6400, 100);
+
+      this.game.add.existing(this.ground);
+
       this.game.add.existing(this.bear);
+
+      this.game.camera.follow(this.bear);
 
       this.game.input.keyboard.addKeyCapture([
         Phaser.Keyboard.RIGHT,
@@ -233,13 +276,12 @@ module.exports = GameOver;
       var jump = this.input.keyboard.addKey(Phaser.Keyboard.UP);
       jump.onDown.add(this.bear.jump, this.bear);
 
-      // this.input.onDown.add(this.bear.jump, this.bear);
+      this.input.onDown.add(this.bear.jump, this.bear);
 
      },
 
     update: function() {
-
-
+      this.game.physics.arcade.collide(this.bear, this.ground, this.deathHandler, null, this);
     },
     clickListener: function() {
       this.game.state.start('gameover');
@@ -248,7 +290,7 @@ module.exports = GameOver;
 
   module.exports = Play;
 
-},{"../prefabs/bear":2}],7:[function(require,module,exports){
+},{"../prefabs/bear":2,"../prefabs/ground":3}],8:[function(require,module,exports){
 
 'use strict';
 function Preload() {
@@ -264,7 +306,7 @@ Preload.prototype = {
     this.asset.anchor.setTo(0.5, 0.5);
     this.load.setPreloadSprite(this.asset);
 
-    this.load.image('background', 'assets/background.jpg');
+    this.load.image('background', 'assets/wintertiles.jpg');
     this.load.image('ground', 'assets/ground.png');
     this.load.image('title', 'assets/title.png');
     this.load.image('startButton', 'assets/start-button.png');
