@@ -7,13 +7,20 @@ function Preload() {
 
 Preload.prototype = {
   preload: function() {
-    this.asset = this.add.sprite(this.width/2,this.height/2, 'preloader');
-    this.asset.anchor.setTo(0.5, 0.5);
 
     this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
+    this.asset = this.add.sprite(this.width/2, this.height/2, 'preloader');
+    this.asset.anchor.setTo(0.5, 0.5);
     this.load.setPreloadSprite(this.asset);
-    this.load.image('yeoman', 'assets/yeoman-logo.png');
 
+    this.load.image('background', 'assets/background.jpg');
+    this.load.image('ground', 'assets/ground.png');
+    this.load.image('title', 'assets/title.png');
+    this.load.image('startButton', 'assets/start-button.png');
+
+
+    this.load.spritesheet('bird', 'assets/bird.png', 34, 24, 3);
+    this.load.spritesheet('bear', 'assets/bear.png', 34, 24, 3);
   },
   create: function() {
     this.asset.cropEnabled = false;
