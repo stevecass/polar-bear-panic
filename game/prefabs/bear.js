@@ -16,8 +16,16 @@ var Bear = function(game, x, y, frame) {
 Bear.prototype = Object.create(Phaser.Sprite.prototype);
 Bear.prototype.constructor = Bear;
 
-Bear.prototype.run = function(){
-  this.body.velocity.x = 400;
+Bear.prototype.runRight = function(){
+  this.body.velocity.x = 200;
+};
+
+Bear.prototype.runLeft = function(){
+  this.body.velocity.x = -200;
+};
+
+Bear.prototype.jump = function(){
+  this.body.velocity.y = -400;
 };
 
 Bear.prototype.update = function() {
