@@ -11,7 +11,7 @@ window.onload = function () {
   game.state.add('menu', require('./states/menu'));
   game.state.add('play', require('./states/play'));
   game.state.add('preload', require('./states/preload'));
-  
+
 
   game.state.start('boot');
 };
@@ -27,7 +27,7 @@ var Bear = function(game, x, y, frame) {
 
   this.body.bounce.y = 0.2;
   this.body.gravity.y = 300;
-  this.body.collideWorldBounds = false;
+  this.body.collideWorldBounds = true;
 
 };
 
@@ -238,7 +238,7 @@ module.exports = GameOver;
       this.game.physics.arcade.gravity.y = 300;
 
       // SETTING BOUNDS
-      this.game.world.setBounds(0, 0, 6400, 600);
+      this.game.world.setBounds(0, 0, 4000, 600);
 
       // this.game.physics.arcade.gravity.x = -200;
       this.background = this.game.add.sprite(0,0,'background');
@@ -246,7 +246,7 @@ module.exports = GameOver;
       this.bear = new Bear(this.game, 100, this.game.height/2);
 
       // CREATING AND ADDING A NEW GROUND
-      this.ground = new Ground(this.game, 0, 550, 6400, 100);
+      this.ground = new Ground(this.game, 0, 550, 4000, 100);
 
       this.game.add.existing(this.ground);
 

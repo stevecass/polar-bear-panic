@@ -17,7 +17,7 @@
       this.game.physics.arcade.gravity.y = 300;
 
       // SETTING BOUNDS
-      this.game.world.setBounds(0, 0, 6400, 600);
+      this.game.world.setBounds(0, 0, 4000, 600);
 
       // this.game.physics.arcade.gravity.x = -200;
       this.background = this.game.add.sprite(0,0,'background');
@@ -25,7 +25,7 @@
       this.bear = new Bear(this.game, 100, this.game.height/2);
 
       // CREATING AND ADDING A NEW GROUND
-      this.ground = new Ground(this.game, 0, 550, 6400, 100);
+      this.ground = new Ground(this.game, 0, 550, 4000, 100);
 
       this.game.add.existing(this.ground);
 
