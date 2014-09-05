@@ -15,7 +15,38 @@ window.onload = function () {
 
   game.state.start('boot');
 };
-},{"./states/boot":2,"./states/gameover":3,"./states/menu":4,"./states/play":5,"./states/preload":6}],2:[function(require,module,exports){
+},{"./states/boot":3,"./states/gameover":4,"./states/menu":5,"./states/play":6,"./states/preload":7}],2:[function(require,module,exports){
+'use strict';
+
+var Bear = function(game, x, y, frame) {
+  Phaser.Sprite.call(this, game, x, y, 'bear', frame);
+
+  // initialize your prefab here
+
+  this.game.physics.arcade.enableBody(this);
+
+  this.body.bounce.y = 0.2;
+  this.body.gravity.y = 300;
+  this.body.collideWorldBounds = true;
+
+};
+
+Bear.prototype = Object.create(Phaser.Sprite.prototype);
+Bear.prototype.constructor = Bear;
+
+Bear.prototype.run = function(){
+  this.body.velocity.x = 400;
+};
+
+Bear.prototype.update = function() {
+
+  // write your prefab's specific update code here
+
+};
+
+module.exports = Bear;
+
+},{}],3:[function(require,module,exports){
 
 'use strict';
 
@@ -34,7 +65,7 @@ Boot.prototype = {
 
 module.exports = Boot;
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 
 'use strict';
 function GameOver() {}
@@ -62,7 +93,7 @@ GameOver.prototype = {
 };
 module.exports = GameOver;
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
  /* Full tutorial: http://codevinsky.ghost.io/phaser-2-0-tutorial-flappy-bear-part-1/ */
   'use strict';
   function Menu() {}
@@ -125,14 +156,41 @@ module.exports = GameOver;
 
   module.exports = Menu;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 
   'use strict';
+
+  var Bear = require('../prefabs/bear');
+  // var game = new Phaser.Game();
+  var cursors;
+  var bear;
+
   function Play() {}
   Play.prototype = {
+
+
     create: function() {
+
+      this.game.physics.startSystem(Phaser.Physics.ARCADE);
+      this.game.physics.arcade.gravity.y = 300;
+      this.game.physics.arcade.gravity.x = -200;
+      this.background = this.game.add.sprite(0,0,'background');
+
+      this.bear = new Bear(this.game, 100, this.game.height/2);
+
+      this.game.add.existing(this.bear);
+
+      this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+
+      var runKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+          runKey.onDown.add(this.bear.run, this.bear);
+
+      this.input.onDown.add(this.bear.run, this.bear);
+
      },
+
     update: function() {
+
 
     },
     clickListener: function() {
@@ -142,7 +200,7 @@ module.exports = GameOver;
 
   module.exports = Play;
 
-},{}],6:[function(require,module,exports){
+},{"../prefabs/bear":2}],7:[function(require,module,exports){
 
 'use strict';
 function Preload() {
@@ -165,7 +223,7 @@ Preload.prototype = {
 
 
     // this.load.spritesheet('bird', 'assets/bird.png', 34, 24, 3);
-    this.load.spritesheet('bear', 'assets/bear.png', 33, 46, 5);
+    this.load.spritesheet('bear', 'assets/bear.png', 32, 48);
   },
   create: function() {
     this.asset.cropEnabled = false;
