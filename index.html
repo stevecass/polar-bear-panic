@@ -1,18 +1,106 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<html lang="en">
 <head>
-  <title>Polar bear panic</title>
-  <link href="css/styles.css" rel="stylesheet" type="text/css">
+	<meta charset="UTF-8" />
+    <title>Polar Bear Panic</title>
+	<script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-  <div id="polar-bear-panic"></div>
-  <script src="js/phaser.js"></script>
-  <script src="js/game.js"></script>
+
+<script type="text/javascript">
 
 
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
 
+
+function preload() {
+
+    game.load.tilemap('map', 'assets/snow_platform.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
+    game.load.image('sky', 'assets/sky2.png');
+    game.load.image('kenney', 'assets/kenney.png');
+
+}
+
+var sprite1;
+var cursors;
+var map;
+var layer;
+var tiles;
+
+function create() {
+
+    var sky = game.add.image(0, 0, 'sky');
+    sky.fixedToCamera = true;
+
+    //  Activate the Ninja physics system
+    game.physics.startSystem(Phaser.Physics.NINJA);
+
+    map = game.add.tilemap('map');
+
+    map.addTilesetImage('kenney');
+
+    layer = map.createLayer('Tile Layer 1');
+
+    layer.resizeWorld();
+
+    var slopeMap = { '25': 3, '26': 3, '129': 1, '45': 1, '66': 1};
+
+    tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
+
+    sprite1 = game.add.sprite(0, 0, 'bear', 15);
+
+    game.physics.ninja.enableCircle(sprite1, sprite1.height/2.25);
+
+    sprite1.body.bounce = 0.5;
+
+    game.camera.follow(sprite1);
+
+    cursors = game.input.keyboard.createCursorKeys();
+
+    sprite1.animations.add('left', [1, 2], 20, true);
+
+    sprite1.animations.add('right', [1,2], 20, true);
+
+}
+
+function update() {
+
+    for (var i = 0; i < tiles.length; i++)
+    {
+        sprite1.body.circle.collideCircleVsTile(tiles[i].tile);
+
+    }
+
+    if (cursors.left.isDown)
+    {
+        sprite1.body.moveLeft(20);
+        sprite1.animations.play('left');
+    }
+    else if (cursors.right.isDown)
+    {
+        sprite1.body.moveRight(20);
+        sprite1.animations.play('right');
+    }
+
+    else
+    {
+        sprite1.animations.stop;
+        sprite1.frame = 0;
+    }
+
+    if (cursors.up.isDown && sprite1.body.touching.down)
+    {
+        sprite1.body.moveUp(2000);
+    }
+
+}
+
+</script>
 </body>
 </html>
