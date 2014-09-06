@@ -57,21 +57,21 @@ function create() {
 
     tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
 
-    bear = game.add.sprite(0, 550, 'bear', 15);
+    bear = game.add.sprite(0, 550, 'bear');
 
-    game.physics.ninja.enableCircle(bear, bear.height/2.25);
+    game.physics.ninja.enableCircle(bear, 20);
 
-    bear.body.bounce = 0.5;
+    bear.body.bounce = 0.25;
 
     game.camera.follow(bear);
 
     cursors = game.input.keyboard.createCursorKeys();
 
-    bear.animations.add('left', [1, 2], 20, true);
+    bear.animations.add('left', [0, 1], 15, true);
 
-    bear.animations.add('right', [1,2], 20, true);
+    bear.animations.add('right', [0, 1], 15, true);
 
-    border-radius.anchor.setTo(.5, 1);
+    bear.anchor.setTo(.5);
 
 }
 
@@ -85,20 +85,21 @@ function update() {
 
     if (cursors.left.isDown) {
 
+        bear.scale.x = -1;
         bear.body.moveLeft(20);
         bear.animations.play('left');
 
     } else if (cursors.right.isDown) {
 
-        bear.scale.x = -1;
+        bear.scale.x = 1;
         bear.body.moveRight(20);
         bear.animations.play('right');
 
     } else {
 
         bear.animations.stop;
-        bear.scale.x = -1;
         bear.frame = 0;
+
     }
 
     if (cursors.up.isDown && bear.body.touching.down) {
