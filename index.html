@@ -20,9 +20,7 @@
 
 <script type="text/javascript">
 
-
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
-
 
 function preload() {
 
@@ -59,7 +57,7 @@ function create() {
 
     tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
 
-    bear = game.add.sprite(0, 0, 'bear', 15);
+    bear = game.add.sprite(0, 550, 'bear', 15);
 
     game.physics.ninja.enableCircle(bear, bear.height/2.25);
 
@@ -73,36 +71,40 @@ function create() {
 
     bear.animations.add('right', [1,2], 20, true);
 
+    border-radius.anchor.setTo(.5, 1);
+
 }
 
 function update() {
 
-    for (var i = 0; i < tiles.length; i++)
-    {
+    for (var i = 0; i < tiles.length; i++) {
+
         bear.body.circle.collideCircleVsTile(tiles[i].tile);
 
     }
 
-    if (cursors.left.isDown)
-    {
+    if (cursors.left.isDown) {
+
         bear.body.moveLeft(20);
         bear.animations.play('left');
-    }
-    else if (cursors.right.isDown)
-    {
+
+    } else if (cursors.right.isDown) {
+
+        bear.scale.x = -1;
         bear.body.moveRight(20);
         bear.animations.play('right');
-    }
 
-    else
-    {
+    } else {
+
         bear.animations.stop;
+        bear.scale.x = -1;
         bear.frame = 0;
     }
 
-    if (cursors.up.isDown && bear.body.touching.down)
-    {
+    if (cursors.up.isDown && bear.body.touching.down) {
+
         bear.body.moveUp(2000);
+
     }
 
 }
