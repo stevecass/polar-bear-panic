@@ -10,6 +10,7 @@ var Bear = function(game, x, y, frame) {
   this.body.bounce.y = 0.2;
   this.body.gravity.y = 300;
   this.body.collideWorldBounds = true;
+  this.anchor.setTo(.5, 1);
 
 
   this.animations.add('right', [1, 2], 10, true);
@@ -24,12 +25,14 @@ Bear.prototype.constructor = Bear;
 Bear.prototype.runRight = function(){
   this.body.drag.x = 0;
   this.body.velocity.x = 400;
+  this.scale.x = -1;
   this.animations.play('right');
 };
   // LEFT MOVEMENT
 Bear.prototype.runLeft = function(){
   this.body.drag.x = 0;
   this.body.velocity.x = -400;
+  this.scale.x = 1;
   this.animations.play('left');
 };
 // SLOW WHEN NOT PRESSED
