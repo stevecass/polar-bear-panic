@@ -20,7 +20,7 @@ Preload.prototype = {
 
 
     // this.load.spritesheet('bird', 'assets/bird.png', 34, 24, 3);
-    this.load.spritesheet('bear', 'assets/bear.png', 32, 48);
+    this.load.spritesheet('bear', 'assets/protoBearSprite.png', 90, 50, 3);
   },
   create: function() {
     this.asset.cropEnabled = false;
