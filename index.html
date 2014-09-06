@@ -57,11 +57,11 @@ function create() {
 
     tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
 
-    bear = game.add.sprite(0, 550, 'bear');
+    bear = game.add.sprite(0, 550, 'bear', 2);
 
     game.physics.ninja.enableCircle(bear, 20);
 
-    bear.body.bounce = 0.25;
+    bear.body.bounce = 0.15;
 
     game.camera.follow(bear);
 
@@ -98,7 +98,7 @@ function update() {
     } else {
 
         bear.animations.stop;
-        bear.frame = 0;
+        bear.frame = 2;
 
     }
 
