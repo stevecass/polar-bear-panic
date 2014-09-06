@@ -27,44 +27,28 @@ var Bear = function(game, x, y, frame) {
 
   this.body.bounce.y = 0.2;
   this.body.gravity.y = 300;
-  this.body.collideWorldBounds = false;
+  this.body.collideWorldBounds = true;
 
 };
 
 Bear.prototype = Object.create(Phaser.Sprite.prototype);
 Bear.prototype.constructor = Bear;
 
+  // RIGHT MOVEMENT
 Bear.prototype.runRight = function(){
-  this.body.velocity.x = 150;
+  this.body.drag.x = 0;
+  this.body.velocity.x = 400;
 };
-
-Bear.prototype.decelerateRight = function(){
-  console.log(this.body.velocity.x);
-  if (this.body.velocity.x === 150){
-  this.body.velocity.x = 125;
-  setTimeout((function(){this.body.velocity.x = 100}).bind(this), 800);
-  setTimeout((function(){this.body.velocity.x = 75}).bind(this), 1600);
-  setTimeout((function(){this.body.velocity.x = 50}).bind(this), 2400);
-  setTimeout((function(){this.body.velocity.x = 25}).bind(this), 3200);
-  setTimeout((function(){this.body.velocity.x = 0}).bind(this), 4000);
-  }
-};
-
+  // LEFT MOVEMENT
 Bear.prototype.runLeft = function(){
-  this.body.velocity.x = -150;
+  this.body.drag.x = 0;
+  this.body.velocity.x = -400;
 };
-
-Bear.prototype.decelerateLeft = function(){
-  if (this.body.velocity.x === -150){
-    this.body.velocity.x = -125;
-    setTimeout((function(){this.body.velocity.x = -100}).bind(this), 800);
-    setTimeout((function(){this.body.velocity.x = -75}).bind(this), 1600);
-    setTimeout((function(){this.body.velocity.x = -50}).bind(this), 2400);
-    setTimeout((function(){this.body.velocity.x = -25}).bind(this), 3200);
-    setTimeout((function(){this.body.velocity.x = 0}).bind(this), 4000);
-  }
+// SLOW WHEN NOT PRESSED
+Bear.prototype.decelerate = function(){
+  this.body.drag.x = 300;
 };
-
+  //JUMPING
 Bear.prototype.jump = function(){
     this.body.velocity.y = -400
 };
@@ -238,7 +222,7 @@ module.exports = GameOver;
       this.game.physics.arcade.gravity.y = 300;
 
       // SETTING BOUNDS
-      this.game.world.setBounds(0, 0, 6400, 600);
+      this.game.world.setBounds(0, 0, 4000, 600);
 
       // this.game.physics.arcade.gravity.x = -200;
       this.background = this.game.add.sprite(0,0,'background');
@@ -246,33 +230,33 @@ module.exports = GameOver;
       this.bear = new Bear(this.game, 100, this.game.height/2);
 
       // CREATING AND ADDING A NEW GROUND
-      this.ground = new Ground(this.game, 0, 550, 6400, 100);
+      this.ground = new Ground(this.game, 0, 550, 4000, 100);
 
       this.game.add.existing(this.ground);
 
+      //ADDS YOUR BEAR
       this.game.add.existing(this.bear);
 
+      // CAMERA FOLLOWS YOUR BEAR
       this.game.camera.follow(this.bear);
 
+      // SETS CONTROLS
       this.game.input.keyboard.addKeyCapture([
         Phaser.Keyboard.RIGHT,
         Phaser.Keyboard.LEFT,
         Phaser.Keyboard.UP
         ]);
 
+      // WHAT CONTROLLS DO
+      // RUN RIGHT
       var runRight = this.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
       runRight.onDown.add(this.bear.runRight, this.bear);
-      runRight.onUp.add(this.bear.decelerateRight, this.bear)
-
-      // this.input.onDown.add(this.bear.runRight, this.bear);
-
+      runRight.onUp.add(this.bear.decelerate, this.bear)
+      // RUN LEFT
       var runLeft = this.input.keyboard.addKey(Phaser.Keyboard.LEFT);
       runLeft.onDown.add(this.bear.runLeft, this.bear);
-      runLeft.onUp.add(this.bear.decelerateLeft, this.bear);
-
-      // this.input.onDown.add(this.bear.runLeft, this.bear);
-
-
+      runLeft.onUp.add(this.bear.decelerate, this.bear);
+      //JUMP
       var jump = this.input.keyboard.addKey(Phaser.Keyboard.UP);
       jump.onDown.add(this.bear.jump, this.bear);
 
