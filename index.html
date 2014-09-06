@@ -61,11 +61,11 @@ function create() {
 
     bear = game.add.sprite(0, 550, 'bear', 2);
 
-    chaser = game.add.sprite(0, 0, 'chaser')
-
     game.physics.ninja.enableCircle(bear, bear.height/2.25);
 
-    game.physics.ninja.enableCircle(chaser, chaser.height/2);
+    // chaser = game.add.sprite(0, 0, 'chaser')
+
+    // game.physics.ninja.enableCircle(chaser, chaser.height/2);
 
     bear.body.bounce = 0.5;
 
@@ -89,7 +89,7 @@ function update() {
 
     }
 
-    chaser.body.moveRight(3);
+    // chaser.body.moveRight(3);
 
     if (cursors.left.isDown) {
 
