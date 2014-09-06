@@ -26,12 +26,14 @@ function preload() {
 
     game.load.tilemap('map', 'assets/snow_platform.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
+    game.load.spritesheet('chaser', 'assets/chaser.png', 800, 600, 1);
     game.load.image('sky', 'assets/sky2.png');
     game.load.image('kenney', 'assets/kenney.png');
 
 }
 
 var bear;
+var chaser;
 var cursors;
 var map;
 var layer;
@@ -59,9 +61,13 @@ function create() {
 
     bear = game.add.sprite(0, 550, 'bear', 2);
 
-    game.physics.ninja.enableCircle(bear, 20);
+    chaser = game.add.sprite(0, 0, 'chaser')
 
-    bear.body.bounce = 0.15;
+    game.physics.ninja.enableCircle(bear, bear.height/2.25);
+
+    game.physics.ninja.enableCircle(chaser, chaser.height/2);
+
+    bear.body.bounce = 0.5;
 
     game.camera.follow(bear);
 
@@ -82,6 +88,8 @@ function update() {
         bear.body.circle.collideCircleVsTile(tiles[i].tile);
 
     }
+
+    chaser.body.moveRight(3);
 
     if (cursors.left.isDown) {
 
