@@ -39,11 +39,11 @@ var layer;
 
 function create() {
 
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-
-    sky = game.add.image(0, 0, 'sky');
+    var sky = game.add.image(0, 0, 'sky');
     sky.fixedToCamera = true;
-    
+
+    //  Activate the Ninja physics system
+    game.physics.startSystem(Phaser.Physics.ARCADE);
 
     map = game.add.tilemap('map');
 
@@ -51,20 +51,21 @@ function create() {
 
     layer = map.createLayer('Tile Layer 1');
 
+    map.setCollisionBetween(1, 100000, true, 'Tile Layer 1');
+
     layer.resizeWorld();
 
     // var slopeMap = { '25': 3, '26': 3, '129': 1, '45': 1, '66': 1};
 
-    // tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
+    // tiles = game.physics.arcade.convertTilemap(map, layer, slopeMap);
 
-    bear = game.add.sprite(0, 550, 'bear', 2);
+    bear = game.add.sprite(0, 500, 'bear', 2);
 
     game.physics.enable(bear, Phaser.Physics.ARCADE);
 
+    game.physics.enable(layer, Phaser.Physics.ARCADE);
+
     game.physics.arcade.gravity.y = 300;
-
-
-    // game.physics.ninja.enable(bear);
 
     bear.body.collideWorldBounds = true;
     bear.body.gravity.y = 800;
@@ -83,12 +84,8 @@ function create() {
 }
 
 function update() {
+    game.physics.arcade.collide(bear, layer);
 
-    // for (var i = 0; i < tiles.length; i++) {
-
-    //     bear.body.circle.collideCircleVsTile(tiles[i].tile);
-
-    // }
     bear.body.velocity.x = 0;
 
     if (cursors.left.isDown) {
