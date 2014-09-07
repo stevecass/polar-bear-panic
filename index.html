@@ -24,7 +24,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: p
 
 function preload() {
 
-    game.load.tilemap('map', 'assets/snow_platform.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('map', 'assets/block_platform_snow.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
     game.load.spritesheet('chaser', 'assets/chaser.png', 800, 600, 1);
     game.load.image('sky', 'assets/sky2.png');
@@ -44,8 +44,10 @@ function create() {
     var sky = game.add.image(0, 0, 'sky');
     sky.fixedToCamera = true;
 
+
+
     //  Activate the Ninja physics system
-    game.physics.startSystem(Phaser.Physics.NINJA);
+    game.physics.startSystem(Phaser.Physics.ARCADE);
 
     map = game.add.tilemap('map');
 
@@ -55,63 +57,64 @@ function create() {
 
     layer.resizeWorld();
 
-    var slopeMap = { '25': 3, '26': 3, '129': 1, '45': 1, '66': 1};
+    // var slopeMap = { '25': 3, '26': 3, '129': 1, '45': 1, '66': 1};
 
-    tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
+    // tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
 
-    bear = game.add.sprite(0, 550, 'bear', 15);
+    bear = game.add.sprite(0, 550, 'bear', 2);
 
-    chaser = game.add.sprite(0, 0, 'chaser')
+    game.physics.enable(bear, Phaser.Physics.ARCADE);
 
-    game.physics.ninja.enableCircle(bear, bear.height/2.25);
+    game.physics.arcade.gravity.y = 300;
 
-    game.physics.ninja.enableCircle(chaser, chaser.height/2);
-
-    bear.body.bounce = 0.5;
+    bear.body.collideWorldBounds = true;
+    bear.body.gravity.y = 800;
+    bear.body.maxVelocity = 1000;
 
     game.camera.follow(bear);
 
     cursors = game.input.keyboard.createCursorKeys();
 
-    bear.animations.add('left', [1, 2], 20, true);
+    bear.animations.add('left', [0, 1], 10, true);
 
-    bear.animations.add('right', [1,2], 20, true);
+    bear.animations.add('right', [0, 1], 10, true);
 
-    border-radius.anchor.setTo(.5, 1);
+    bear.anchor.setTo(.5);
 
 }
 
 function update() {
 
-    for (var i = 0; i < tiles.length; i++) {
+    // for (var i = 0; i < tiles.length; i++) {
 
-        bear.body.circle.collideCircleVsTile(tiles[i].tile);
+    //     bear.body.circle.collideCircleVsTile(tiles[i].tile);
 
-    }
+    // }
+    bear.body.velocity.x = 0;
 
     chaser.body.moveRight(3);
 
     if (cursors.left.isDown) {
 
-        bear.body.moveLeft(20);
+        bear.scale.x = -1;
+        bear.body.velocity.x = -500;
         bear.animations.play('left');
 
     } else if (cursors.right.isDown) {
 
-        bear.scale.x = -1;
-        bear.body.moveRight(20);
+        bear.scale.x = 1;
+        bear.body.velocity.x = 500;
         bear.animations.play('right');
 
     } else {
 
         bear.animations.stop;
-        bear.scale.x = -1;
-        bear.frame = 0;
+        bear.frame = 2;
     }
 
-    if (cursors.up.isDown && bear.body.touching.down) {
+    if (cursors.up.isDown && bear.body.onFloor()) {
 
-        bear.body.moveUp(2000);
+        bear.body.velocity.y = -500;
 
     }
 
