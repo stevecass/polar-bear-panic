@@ -8,6 +8,7 @@ Bear.Game = function(game) {
 	hardRain = null;
 	iceberg = null;
 	gameOver = false;
+	chaser = null;
 };
 
 Bear.Game.prototype = {
@@ -39,7 +40,7 @@ Bear.Game.prototype = {
 	    snow.maxRotation = 0;
 	    snow.start(false, 1600, 5, 0);
 
-	    bear = this.add.sprite(0, 500, 'bear', 2);
+	    bear = this.add.sprite(500, 500, 'bear', 2);
 	    this.physics.enable(bear, Phaser.Physics.ARCADE);
 	    bear.body.collideWorldBounds = true;
 	    bear.body.gravity.y = 600;
@@ -58,12 +59,26 @@ Bear.Game.prototype = {
 	    hardRain.minRotation = 360;
 	    hardRain.maxRotation = 90;
 	    hardRain.start(false, 1600, 5, 0);
+
+	    chaser = this.add.sprite(0, 0, 'chaser');
+	    game.physics.enable(chaser, Phaser.Physics.ARCADE);
+	    chaser.body.collideWorldBounds = true;
+
+
 	},
 	update : function() {
 		this.game.physics.arcade.collide(bear, layer);
 	    this.game.physics.arcade.collide(bear, hardRain);
 
 	    bear.body.drag.x = 800;
+
+	    chaser.body.velocity.x = 100;
+
+        if (game.physics.arcade.overlap(bear, chaser)) {
+            console.log("Overlapping");
+            game.add.text(bear.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
+            bear.kill();
+        };
 
 	    if (cursors.left.isDown) {
 
@@ -88,7 +103,7 @@ Bear.Game.prototype = {
 	        bear.body.velocity.y = -600;
 
 	    }
-	    if (gameOver = true) {
+	    if (gameOver === true) {
 	    	// this.game.state.start('MainMenu');
 	    }
 	}
