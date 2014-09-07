@@ -61,7 +61,7 @@ Bear.Game.prototype = {
 	    hardRain.start(false, 1600, 5, 0);
 
 	    chaser = this.add.sprite(0, 0, 'chaser');
-	    game.physics.enable(chaser, Phaser.Physics.ARCADE);
+	    this.game.physics.enable(chaser, Phaser.Physics.ARCADE);
 	    chaser.body.collideWorldBounds = true;
 
 
@@ -74,9 +74,9 @@ Bear.Game.prototype = {
 
 	    chaser.body.velocity.x = 100;
 
-        if (game.physics.arcade.overlap(bear, chaser)) {
+        if (this.game.physics.arcade.overlap(bear, chaser)) {
             console.log("Overlapping");
-            game.add.text(bear.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
+            this.game.add.text(bear.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
             bear.kill();
         };
 
