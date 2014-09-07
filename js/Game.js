@@ -11,7 +11,53 @@ Game = function(game) {
 	chaser = null;
 };
 
+var Bear = function(game, x, y, frame) {
+
+    Phaser.Sprite.call(this, game, x, y, 'bear', 2);
+
+    this.game.physics.arcade.enableBody(this);
+
+    this.body.collideWorldBounds = true;
+    this.body.gravity.y = 600;
+    this.body.maxVelocity = 1000;
+
+    this.animations.add('left', [0, 1], 10, true);
+    this.animations.add('right', [0, 1], 10, true);
+    this.anchor.setTo(.5);
+    this.body.drag.x = 800;
+
+};
+
+Bear.prototype = Object.create(Phaser.Sprite.prototype);
+Bear.prototype.constructor = Bear;
+
+  // RIGHT MOVEMENT
+Bear.prototype.runRight = function(){
+  this.body.drag.x = 200;
+  this.body.velocity.x = 400;
+  this.scale.x = 1;
+  this.animations.play('right');
+};
+  // LEFT MOVEMENT
+Bear.prototype.runLeft = function(){
+  this.body.drag.x = 200;
+  this.body.velocity.x = -400;
+  this.scale.x = -1;
+  this.animations.play('left');
+};
+  //JUMPING
+Bear.prototype.jump = function(){
+    this.body.velocity.y = -600;
+};
+
+Bear.prototype.stop = function(){
+    this.body.drag.x = 200;
+    this.animations.stop();
+    this.frame = 2;
+};
+
 Game.prototype = {
+
 	create: function() {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	    this.game.physics.arcade.gravity.y = 300;
@@ -40,15 +86,16 @@ Game.prototype = {
 	    snow.maxRotation = 0;
 	    snow.start(false, 1600, 5, 0);
 
-	    bear = this.add.sprite(500, 500, 'bear', 2);
-	    this.physics.enable(bear, Phaser.Physics.ARCADE);
-	    bear.body.collideWorldBounds = true;
-	    bear.body.gravity.y = 600;
-	    bear.body.maxVelocity = 1000;
-	    this.camera.follow(bear);
-	    bear.animations.add('left', [0, 1], 10, true);
-	    bear.animations.add('right', [0, 1], 10, true);
-	    bear.anchor.setTo(.5);
+	    this.bear = new Bear(this.game, 500, 500);
+	    // this.bear = this.add.sprite(500, 500, 'bear', 2);
+	    this.physics.enable(this.bear, Phaser.Physics.ARCADE);
+	    this.bear.body.collideWorldBounds = true;
+	    this.bear.body.gravity.y = 600;
+	    this.bear.body.maxVelocity = 1000;
+	    this.camera.follow(this.bear);
+	    this.bear.animations.add('left', [0, 1], 10, true);
+	    this.bear.animations.add('right', [0, 1], 10, true);
+	    this.bear.anchor.setTo(.5);
 
 	    hardRain = this.add.emitter(this.world.centerX, 0, 100);
 	    this.physics.enable(hardRain, Phaser.Physics.ARCADE)
@@ -66,45 +113,46 @@ Game.prototype = {
 
 
 	},
-	update : function() {
-		this.game.physics.arcade.collide(bear, layer);
-	    this.game.physics.arcade.collide(bear, hardRain);
 
-	    bear.body.drag.x = 800;
+	update : function() {
+
+			this.game.physics.arcade.collide(this.bear, layer);
+	    this.game.physics.arcade.collide(this.bear, hardRain);
 
 	    chaser.body.velocity.x = 100;
 
-        if (this.game.physics.arcade.overlap(bear, chaser)) {
+        if (this.game.physics.arcade.overlap(this.bear, chaser)) {
             console.log("Overlapping");
-            this.game.add.text(bear.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
-            bear.kill();
+            this.game.add.text(this.bear.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
+            this.bear.kill();
         };
 
 	    if (cursors.left.isDown) {
 
-	        bear.scale.x = -1;
-	        bear.body.velocity.x = -500;
-	        bear.animations.play('left');
+	        this.bear.scale.x = -1;
+	        this.bear.body.velocity.x = -500;
+	        this.bear.animations.play('left');
 
 	    } else if (cursors.right.isDown) {
 
-	        bear.scale.x = 1;
-	        bear.body.velocity.x = 500;
-	        bear.animations.play('right');
+	        this.bear.scale.x = 1;
+	        this.bear.body.velocity.x = 500;
+	        this.bear.animations.play('right');
 
 	    } else {
 
-	        bear.animations.stop;
-	        bear.frame = 2;
+	        this.bear.animations.stop;
+	        this.bear.frame = 2;
 	    }
 
-	    if (cursors.up.isDown && bear.body.onFloor()) {
+	    if (cursors.up.isDown && this.bear.body.onFloor()) {
 
-	        bear.body.velocity.y = -600;
+	        this.bear.body.velocity.y = -600;
 
 	    }
-	    if (gameOver === true) {
-	    	// this.game.state.start('MainMenu');
-	    }
+	    // if (gameOver === true) {
+	    // 	// this.game.state.start('MainMenu');
+	    // }
 	}
+
 };
