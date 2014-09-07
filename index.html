@@ -68,7 +68,7 @@ function create() {
     game.physics.arcade.gravity.y = 300;
 
     bear.body.collideWorldBounds = true;
-    bear.body.gravity.y = 800;
+    bear.body.gravity.y = 600;
     bear.body.maxVelocity = 1000;
 
     game.camera.follow(bear);
@@ -86,7 +86,7 @@ function create() {
 function update() {
     game.physics.arcade.collide(bear, layer);
 
-    bear.body.velocity.x = 0;
+    bear.body.drag.x = 800;
 
     if (cursors.left.isDown) {
 
@@ -108,7 +108,7 @@ function update() {
 
     if (cursors.up.isDown && bear.body.onFloor()) {
 
-        bear.body.velocity.y = -500;
+        bear.body.velocity.y = -600;
 
     }
 
