@@ -26,14 +26,12 @@ function preload() {
 
     game.load.tilemap('map', 'assets/block_platform_snow.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
-    game.load.spritesheet('chaser', 'assets/chaser.png', 800, 600, 1);
     game.load.image('sky', 'assets/sky2.png');
     game.load.image('kenney', 'assets/kenney.png');
 
 }
 
 var bear;
-var chaser;
 var cursors;
 var map;
 var layer;
@@ -44,10 +42,9 @@ function create() {
     var sky = game.add.image(0, 0, 'sky');
     sky.fixedToCamera = true;
 
-
-
     //  Activate the Ninja physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
+
 
     map = game.add.tilemap('map');
 
@@ -55,15 +52,19 @@ function create() {
 
     layer = map.createLayer('Tile Layer 1');
 
+    map.setCollisionBetween(1, 100000, true, 'Tile Layer 1');
+
     layer.resizeWorld();
 
     // var slopeMap = { '25': 3, '26': 3, '129': 1, '45': 1, '66': 1};
 
-    // tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
+    // tiles = game.physics.arcade.convertTilemap(map, layer, slopeMap);
 
-    bear = game.add.sprite(0, 550, 'bear', 2);
+    bear = game.add.sprite(0, 500, 'bear', 2);
 
     game.physics.enable(bear, Phaser.Physics.ARCADE);
+
+    game.physics.enable(layer, Phaser.Physics.ARCADE);
 
     game.physics.arcade.gravity.y = 300;
 
@@ -84,15 +85,9 @@ function create() {
 }
 
 function update() {
+    game.physics.arcade.collide(bear, layer);
 
-    // for (var i = 0; i < tiles.length; i++) {
-
-    //     bear.body.circle.collideCircleVsTile(tiles[i].tile);
-
-    // }
     bear.body.velocity.x = 0;
-
-    chaser.body.moveRight(3);
 
     if (cursors.left.isDown) {
 
