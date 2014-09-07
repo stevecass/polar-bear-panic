@@ -4,6 +4,9 @@
 	<meta charset="UTF-8" />
     <title>Polar Bear Panic</title>
 	<script type="text/javascript" src="js/phaser.min.js"></script>
+    <script src= "js/Preloader.js"></script>
+    <script src= "js/MainMenu.js"></script>
+    <script src= "js/Game.js"></script>
     <style type="text/css">
         canvas {
             margin: auto;
@@ -17,154 +20,15 @@
     </style>
 </head>
 <body>
+    <script>
+    (function() {
 
-<script type="text/javascript">
-
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
-
-function preload() {
-
-
-    game.load.image('sky', 'assets/sky2.png');
-    game.load.image('kenney', 'assets/kenney.png');
-    game.load.tilemap('map', 'assets/block_platform_snow.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.spritesheet('snow', 'assets/snow.png', 17, 17);
-    game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
-    game.load.spritesheet('fish', 'assets/fish.png', 25, 45);
-    game.load.spritesheet('iceberg', 'assets/iceberg.png', 90, 62);
-    // game.load.spritesheet('iceberg', 'assets/iceberg.png', 110, 76);
-    game.load.spritesheet('chaser', 'assets/chaser.png', 200, 600);
-
-
-}
-
-
-var cursors;
-var sky;
-var map;
-var layer;
-var snow;
-var bear;
-var hardRain;
-var iceBergs;
-var chaser;
-
-
-function create() {
-
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 300;
-
-    cursors = game.input.keyboard.createCursorKeys();
-
-    sky = game.add.image(0, 0, 'sky');
-    sky.fixedToCamera = true;
-
-
-    map = game.add.tilemap('map');
-    map.addTilesetImage('kenney');
-    layer = map.createLayer('Tile Layer 1');
-    game.physics.enable(layer, Phaser.Physics.ARCADE);
-    map.setCollisionBetween(1, 100000, true, 'Tile Layer 1');
-    layer.resizeWorld();
-
-    snow = game.add.emitter(game.world.centerX, 0, 1000);
-    snow.width = game.world.width;
-    snow.makeParticles('snow');
-    snow.minParticleScale = 0.4;
-    snow.maxParticleScale = 0.8;
-    snow.setYSpeed(300, 500);
-    snow.setXSpeed(-500, -1000);
-    snow.minRotation = 0;
-    snow.maxRotation = 0;
-    snow.start(false, 1600, 5, 0);
-
-    bear = game.add.sprite(500, 500, 'bear', 2);
-    game.physics.enable(bear, Phaser.Physics.ARCADE);
-    bear.body.collideWorldBounds = true;
-    bear.body.gravity.y = 600;
-    bear.body.maxVelocity = 1000;
-    game.camera.follow(bear);
-    bear.animations.add('left', [0, 1], 10, true);
-    bear.animations.add('right', [0, 1], 10, true);
-    bear.anchor.setTo(.5);
-
-    hardRain = game.add.emitter(game.world.centerX, 0, 100);
-    game.physics.enable(hardRain, Phaser.Physics.ARCADE);
-    hardRain.width = game.world.width;
-    hardRain.makeParticles('fish');
-    hardRain.setYSpeed(300, 500);
-    hardRain.setXSpeed(-500, -1000);
-    hardRain.minRotation = 360;
-    hardRain.maxRotation = 90;
-    hardRain.start(false, 1600, 5, 0);
-
-
-    iceBergs = game.add.group();
-    iceBergs.enableBody = true;
-    iceBergs.physicsBodyType = Phaser.Physics.ARCADE;
-
-    for (var i = 0; i < 700; i++){
-        var iceBerg = iceBergs.create(700 + i * 48, 50, 'iceberg');
-        iceBerg.body.collideWorldBounds = true;
-        iceBerg.body.gravity.x = game.rnd.integerInRange(-275,1450);
-        iceBerg.body.gravity.y = 100 + Math.random() * 100;
-    }
-
-    chaser = game.add.sprite(0, 0, 'chaser');
-    game.physics.enable(chaser, Phaser.Physics.ARCADE);
-    chaser.body.collideWorldBounds = true;
-
-}
-
-function update() {
-
-    game.physics.arcade.collide(bear, layer);
-    game.physics.arcade.collide(bear, hardRain);
-    game.physics.arcade.collide(layer, iceBergs);
-    game.physics.arcade.collide(bear, iceBergs);
-
-    bear.body.drag.x = 800;
-
-    chaser.body.velocity.x = 100;
-
-    if (game.physics.arcade.overlap(bear, chaser)) {
-        console.log("Overlapping");
-        bear.kill();
-    };
-
-    if (cursors.left.isDown) {
-
-        bear.scale.x = -1;
-        bear.body.velocity.x = -500;
-        bear.animations.play('left');
-
-    } else if (cursors.right.isDown) {
-
-        bear.scale.x = 1;
-        bear.body.velocity.x = 500;
-        bear.animations.play('right');
-
-    } else {
-
-        bear.animations.stop;
-        bear.frame = 2;
-    }
-
-    if (cursors.up.isDown && bear.body.onFloor()) {
-
-        bear.body.velocity.y = -600;
-
-    }
-
-    if (bear.position.x >= 11900){
-        var style = { font: '65px Arial', fill: '#ffffff', align: 'center'};
-        titleText = game.add.text(11650,100, 'Game Over!', style);
-        titleText.anchor.setTo(0.5, 0.5);
-    }
-
-}
-
-</script>
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
+        game.state.add('Preloader', Bear.Preloader);
+        game.state.add('MainMenu', Bear.MainMenu);
+        game.state.add('Game', Bear.Game);
+        game.state.start('Preloader');
+    })();
+    </script>
 </body>
 </html>
