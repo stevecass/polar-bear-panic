@@ -1,7 +1,7 @@
-var Bear = {};
-Bear.Preloader = function(game) {};
 
-Bear.Preloader.prototype = {
+Preloader = function(game) {};
+
+Preloader.prototype = {
 	preload:function() {
 		this.game.load.image('sky', 'assets/sky2.png');
     	this.game.load.image('kenney', 'assets/kenney.png');

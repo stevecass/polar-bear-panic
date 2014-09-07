@@ -1,4 +1,4 @@
-Bear.Game = function(game) {
+Game = function(game) {
 	cursors = null;
 	sky = null;
 	map = null;
@@ -11,7 +11,7 @@ Bear.Game = function(game) {
 	chaser = null;
 };
 
-Bear.Game.prototype = {
+Game.prototype = {
 	create: function() {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	    this.game.physics.arcade.gravity.y = 300;
