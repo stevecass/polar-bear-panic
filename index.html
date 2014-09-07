@@ -114,6 +114,7 @@ function update() {
 
     if (game.physics.arcade.overlap(bear, chaser)) {
         console.log("Overlapping");
+        game.add.text(bear.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
         bear.kill();
     };
 
