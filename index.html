@@ -24,15 +24,18 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: p
 
 function preload() {
 
+
     game.load.image('sky', 'assets/sky2.png');
     game.load.image('kenney', 'assets/kenney.png');
     game.load.tilemap('map', 'assets/block_platform_snow.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.spritesheet('snow', 'assets/snow.png', 17, 17);
     game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
     game.load.spritesheet('fish', 'assets/fish.png', 25, 45);
-    game.load.spritesheet('iceberg', 'assets/iceberg.png', 110, 76);
+    // game.load.spritesheet('iceberg', 'assets/iceberg.png', 110, 76);
+    game.load.spritesheet('chaser', 'assets/chaser.png', 200, 600);
 
 }
+
 
 var cursors;
 var sky;
@@ -41,7 +44,8 @@ var layer;
 var snow;
 var bear;
 var hardRain;
-var iceberg;
+// var iceberg;
+var chaser;
 
 function create() {
 
@@ -83,7 +87,7 @@ function create() {
     bear.anchor.setTo(.5);
 
     hardRain = game.add.emitter(game.world.centerX, 0, 100);
-    game.physics.enable(hardRain, Phaser.Physics.ARCADE)
+    game.physics.enable(hardRain, Phaser.Physics.ARCADE);
     hardRain.width = game.world.width;
     hardRain.makeParticles('fish');
     hardRain.setYSpeed(300, 500);
@@ -91,6 +95,11 @@ function create() {
     hardRain.minRotation = 360;
     hardRain.maxRotation = 90;
     hardRain.start(false, 1600, 5, 0);
+
+    chaser = game.add.sprite(0, 0, 'chaser');
+    game.physics.enable(chaser, Phaser.Physics.ARCADE);
+    chaser.body.collideWorldBounds = true;
+
 
 }
 
@@ -100,6 +109,12 @@ function update() {
     game.physics.arcade.collide(bear, hardRain);
 
     bear.body.drag.x = 800;
+
+    chaser.body.velocity.x = 150;
+
+    if (game.physics.arcade.overlap(bear, chaser)) {
+        console.log("Overlapping");
+    };
 
     if (cursors.left.isDown) {
 
