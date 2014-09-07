@@ -59,13 +59,13 @@ function create() {
     map.setCollisionBetween(1, 100000, true, 'Tile Layer 1');
     layer.resizeWorld();
 
-    snow = game.add.emitter(game.world.centerX, 0, 400);
+    snow = game.add.emitter(game.world.centerX, 0, 1000);
     snow.width = game.world.width;
     snow.makeParticles('snow');
-    snow.minParticleScale = 0.2;
-    snow.maxParticleScale = 0.4;
+    snow.minParticleScale = 0.4;
+    snow.maxParticleScale = 0.8;
     snow.setYSpeed(300, 500);
-    snow.setXSpeed(-5, 5);
+    snow.setXSpeed(-500, -1000);
     snow.minRotation = 0;
     snow.maxRotation = 0;
     snow.start(false, 1600, 5, 0);
@@ -80,12 +80,12 @@ function create() {
     bear.animations.add('right', [0, 1], 10, true);
     bear.anchor.setTo(.5);
 
-    hardRain = game.add.emitter(game.world.centerX, 0, 200);
+    hardRain = game.add.emitter(game.world.centerX, 0, 100);
     game.physics.enable(hardRain, Phaser.Physics.ARCADE)
     hardRain.width = game.world.width;
     hardRain.makeParticles('fish');
     hardRain.setYSpeed(300, 500);
-    hardRain.setXSpeed(-5, 5);
+    hardRain.setXSpeed(-500, -1000);
     hardRain.minRotation = 360;
     hardRain.maxRotation = 90;
     hardRain.start(false, 1600, 5, 0);
