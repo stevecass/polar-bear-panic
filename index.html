@@ -76,7 +76,7 @@ function create() {
     snow.maxRotation = 0;
     snow.start(false, 1600, 5, 0);
 
-    bear = game.add.sprite(0, 500, 'bear', 2);
+    bear = game.add.sprite(500, 500, 'bear', 2);
     game.physics.enable(bear, Phaser.Physics.ARCADE);
     bear.body.collideWorldBounds = true;
     bear.body.gravity.y = 600;
@@ -110,10 +110,11 @@ function update() {
 
     bear.body.drag.x = 800;
 
-    chaser.body.velocity.x = 150;
+    chaser.body.velocity.x = 100;
 
     if (game.physics.arcade.overlap(bear, chaser)) {
         console.log("Overlapping");
+        bear.kill();
     };
 
     if (cursors.left.isDown) {
