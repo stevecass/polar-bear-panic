@@ -24,28 +24,26 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: p
 
 function preload() {
 
-    game.load.tilemap('map', 'assets/block_platform_snow.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
     game.load.image('sky', 'assets/sky2.png');
     game.load.image('kenney', 'assets/kenney.png');
+    game.load.tilemap('map', 'assets/block_platform_snow.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
 
 }
 
-var bear;
 var cursors;
+var sky;
 var map;
+var bear;
 var layer;
-var tiles;
 
 function create() {
 
-    var sky = game.add.image(0, 0, 'sky');
-    sky.fixedToCamera = true;
-
-
-
-    //  Activate the Ninja physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    sky = game.add.image(0, 0, 'sky');
+    sky.fixedToCamera = true;
+    
 
     map = game.add.tilemap('map');
 
