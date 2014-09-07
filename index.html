@@ -30,6 +30,7 @@ function preload() {
     game.load.spritesheet('snow', 'assets/snow.png', 17, 17);
     game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
     game.load.spritesheet('fish', 'assets/fish.png', 25, 45);
+    game.load.spritesheet('iceberg', 'assets/iceberg.png', 110, 76);
 
 }
 
@@ -40,6 +41,7 @@ var layer;
 var snow;
 var bear;
 var hardRain;
+var iceberg;
 
 function create() {
 
@@ -50,7 +52,7 @@ function create() {
 
     sky = game.add.image(0, 0, 'sky');
     sky.fixedToCamera = true;
-    
+
 
     map = game.add.tilemap('map');
     map.addTilesetImage('kenney');
