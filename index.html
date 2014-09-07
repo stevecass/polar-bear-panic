@@ -20,102 +20,112 @@
 
 <script type="text/javascript">
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
 
 function preload() {
 
-    game.load.tilemap('map', 'assets/snow_platform.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
-    game.load.spritesheet('chaser', 'assets/chaser.png', 800, 600, 1);
+
     game.load.image('sky', 'assets/sky2.png');
     game.load.image('kenney', 'assets/kenney.png');
+    game.load.tilemap('map', 'assets/block_platform_snow.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.spritesheet('snow', 'assets/snow.png', 17, 17);
+    game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
+    game.load.spritesheet('fish', 'assets/fish.png', 25, 45);
 
 }
 
-var bear;
-var chaser;
+
 var cursors;
+var sky;
 var map;
 var layer;
-var tiles;
+var snow;
+var bear;
+var hardRain;
 
 function create() {
 
-    var sky = game.add.image(0, 0, 'sky');
-    sky.fixedToCamera = true;
-
-    //  Activate the Ninja physics system
-    game.physics.startSystem(Phaser.Physics.NINJA);
-
-    map = game.add.tilemap('map');
-
-    map.addTilesetImage('kenney');
-
-    layer = map.createLayer('Tile Layer 1');
-
-    layer.resizeWorld();
-
-    var slopeMap = { '25': 3, '26': 3, '129': 1, '45': 1, '66': 1};
-
-    tiles = game.physics.ninja.convertTilemap(map, layer, slopeMap);
-
-    bear = game.add.sprite(0, 550, 'bear', 2);
-
-    game.physics.ninja.enableCircle(bear, bear.height/2.25);
-
-    // chaser = game.add.sprite(0, 0, 'chaser')
-
-    // game.physics.ninja.enableCircle(chaser, chaser.height/2);
-
-    bear.body.bounce = 0.5;
-
-    game.camera.follow(bear);
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.arcade.gravity.y = 300;
 
     cursors = game.input.keyboard.createCursorKeys();
 
-    bear.animations.add('left', [0, 1], 15, true);
+    sky = game.add.image(0, 0, 'sky');
+    sky.fixedToCamera = true;
+    
 
-    bear.animations.add('right', [0, 1], 15, true);
+    map = game.add.tilemap('map');
+    map.addTilesetImage('kenney');
+    layer = map.createLayer('Tile Layer 1');
+    game.physics.enable(layer, Phaser.Physics.ARCADE);
+    map.setCollisionBetween(1, 100000, true, 'Tile Layer 1');
+    layer.resizeWorld();
 
+    snow = game.add.emitter(game.world.centerX, 0, 400);
+    snow.width = game.world.width;
+    snow.makeParticles('snow');
+    snow.minParticleScale = 0.2;
+    snow.maxParticleScale = 0.4;
+    snow.setYSpeed(300, 500);
+    snow.setXSpeed(-5, 5);
+    snow.minRotation = 0;
+    snow.maxRotation = 0;
+    snow.start(false, 1600, 5, 0);
+
+    bear = game.add.sprite(0, 500, 'bear', 2);
+    game.physics.enable(bear, Phaser.Physics.ARCADE);
+    bear.body.collideWorldBounds = true;
+    bear.body.gravity.y = 600;
+    bear.body.maxVelocity = 1000;
+    game.camera.follow(bear);
+    bear.animations.add('left', [0, 1], 10, true);
+    bear.animations.add('right', [0, 1], 10, true);
     bear.anchor.setTo(.5);
+
+    hardRain = game.add.emitter(game.world.centerX, 0, 200);
+    game.physics.enable(hardRain, Phaser.Physics.ARCADE)
+    hardRain.width = game.world.width;
+    hardRain.makeParticles('fish');
+    hardRain.setYSpeed(300, 500);
+    hardRain.setXSpeed(-5, 5);
+    hardRain.minRotation = 360;
+    hardRain.maxRotation = 90;
+    hardRain.start(false, 1600, 5, 0);
 
 }
 
 function update() {
 
-    for (var i = 0; i < tiles.length; i++) {
+    game.physics.arcade.collide(bear, layer);
+    game.physics.arcade.collide(bear, hardRain);
 
-        bear.body.circle.collideCircleVsTile(tiles[i].tile);
-
-    }
+    bear.body.drag.x = 800;
 
     // chaser.body.moveRight(3);
 
     if (cursors.left.isDown) {
 
         bear.scale.x = -1;
-        bear.body.moveLeft(20);
+        bear.body.velocity.x = -500;
         bear.animations.play('left');
 
     } else if (cursors.right.isDown) {
 
         bear.scale.x = 1;
-        bear.body.moveRight(20);
+        bear.body.velocity.x = 500;
         bear.animations.play('right');
 
     } else {
 
         bear.animations.stop;
         bear.frame = 2;
-
     }
 
-    if (cursors.up.isDown && bear.body.touching.down) {
+    if (cursors.up.isDown && bear.body.onFloor()) {
 
-        bear.body.moveUp(2000);
+        bear.body.velocity.y = -600;
 
     }
-
 }
 
 </script>
