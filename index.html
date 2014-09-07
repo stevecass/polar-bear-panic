@@ -30,7 +30,7 @@ function preload() {
     game.load.spritesheet('snow', 'assets/snow.png', 17, 17);
     game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
     game.load.spritesheet('fish', 'assets/fish.png', 25, 45);
-    game.load.spritesheet('iceberg', 'assets/iceberg.png', 110, 76);
+    game.load.spritesheet('iceberg', 'assets/iceberg.png', 90, 62);
 
 }
 
@@ -41,7 +41,7 @@ var layer;
 var snow;
 var bear;
 var hardRain;
-var iceberg;
+var iceBergs;
 
 function create() {
 
@@ -92,12 +92,25 @@ function create() {
     hardRain.maxRotation = 90;
     hardRain.start(false, 1600, 5, 0);
 
+    iceBergs = game.add.group();
+    iceBergs.enableBody = true;
+    iceBergs.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 30; i++){
+        var iceBerg = iceBergs.create(200 + i * 48, 50, 'iceberg');
+        iceBerg.body.collideWorldBounds = true;
+        iceBerg.body.gravity.x = game.rnd.integerInRange(-50,50);
+        iceBerg.body.gravity.y = 100 + Math.random() * 100;
+    }
+
 }
 
 function update() {
 
     game.physics.arcade.collide(bear, layer);
     game.physics.arcade.collide(bear, hardRain);
+    game.physics.arcade.collide(layer, iceBergs);
+    game.physics.arcade.collide(bear, iceBergs);
 
     bear.body.drag.x = 800;
 
@@ -124,6 +137,13 @@ function update() {
         bear.body.velocity.y = -600;
 
     }
+
+    if (bear.position.x >= 11900){
+        var style = { font: '65px Arial', fill: '#ffffff', align: 'center'};
+        titleText = game.add.text(11650,100, 'Game Over!', style);
+        titleText.anchor.setTo(0.5, 0.5);
+    }
+
 }
 
 </script>
