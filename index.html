@@ -104,10 +104,10 @@ function create() {
     iceBergs.enableBody = true;
     iceBergs.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 30; i++){
-        var iceBerg = iceBergs.create(200 + i * 48, 50, 'iceberg');
+    for (var i = 0; i < 700; i++){
+        var iceBerg = iceBergs.create(700 + i * 48, 50, 'iceberg');
         iceBerg.body.collideWorldBounds = true;
-        iceBerg.body.gravity.x = game.rnd.integerInRange(-50,50);
+        iceBerg.body.gravity.x = game.rnd.integerInRange(-275,1450);
         iceBerg.body.gravity.y = 100 + Math.random() * 100;
     }
 
