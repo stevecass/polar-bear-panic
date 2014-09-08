@@ -10,7 +10,7 @@ Preloader.prototype = {
     	this.game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
     	this.game.load.spritesheet('fish', 'assets/fish.png', 25, 45);
     	// this.game.load.spritesheet('iceberg', 'assets/iceberg.png', 110, 76);
-    	this.game.load.spritesheet('chaser', 'assets/chaser.png', 200, 600);
+    	this.game.load.spritesheet('chaser', 'assets/sunshaftcombo.png', 200, 600, 2);
 
 	},
 
