@@ -51,11 +51,6 @@ Bear.prototype.jump = function(){
 Bear.prototype.stop = function(){
     this.animations.stop();
     this.frame = 2;
-};
-
-Bear.prototype.die = function(){
-	this.game.add.text(this.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
-	this.kill();
 }
 
 Game.prototype = {
@@ -117,7 +112,9 @@ Game.prototype = {
 	    chaser.body.velocity.x = 300;
 
         if (this.game.physics.arcade.overlap(this.bear, chaser)) {
-        	this.bear.die();
+            console.log("Overlapping");
+            this.game.add.text(this.bear.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
+            this.bear.kill();
         };
 
 	    if (cursors.left.isDown) {
