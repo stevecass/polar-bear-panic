@@ -9,6 +9,7 @@ Game = function(game) {
 	iceberg = null;
 	gameOver = false;
 	chaser = null;
+	pole = null;
 };
 
 var Bear = function(game, x, y, frame) {
@@ -45,16 +46,34 @@ Bear.prototype.runLeft = function(){
 };
   //JUMPING
 Bear.prototype.jump = function(){
-    this.body.velocity.y = -610;
+    this.body.velocity.y = -600;
 };
 
 Bear.prototype.stop = function(){
     this.animations.stop();
     this.frame = 2;
-}
+};
+
+Bear.prototype.die = function(){
+	this.game.add.text(this.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
+	this.kill();
+	this.game.state.start("Over");
+};
+
+Bear.prototype.win = function(){
+    this.game.add.text(this.position.x, 300, 'You Made It!\n    :)', { fill: '#ffffff' });
+    this.game.state.start("Over");
+};
 
 Game.prototype = {
+	restartGame: function() {
+		this.game.state.start('Game');
+	},
+
 	create: function() {
+
+		// var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
+
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	    this.game.physics.arcade.gravity.y = 300;
 
@@ -103,32 +122,49 @@ Game.prototype = {
 	    this.game.physics.enable(chaser, Phaser.Physics.ARCADE);
 	    chaser.body.collideWorldBounds = true;
 
-
+	    pole = this.add.sprite( 11715, 200, 'pole');
+	    this.game.physics.enable(pole, Phaser.Physics.ARCADE);
 	},
+
 	update : function() {
+		// this.playerLocations.set("test");
+		var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
+		// playerLocations.on('value', function (snapshot) {
+		//   console.log(snapshot.val());
+		// });
+
 		this.game.physics.arcade.collide(this.bear, layer);
 	    this.game.physics.arcade.collide(this.bear, hardRain);
+	    this.game.physics.arcade.collide(pole, layer);
 
-	    chaser.body.velocity.x = 300;
+	    chaser.body.velocity.x = 290;
 
         if (this.game.physics.arcade.overlap(this.bear, chaser)) {
-            console.log("Overlapping");
-            this.game.add.text(this.bear.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
-            this.bear.kill();
-        };
+        	this.bear.die();
+        }
+
+        if (this.game.physics.arcade.overlap(this.bear, pole)) {
+        	this.bear.win();
+        }
 
 	    if (cursors.left.isDown) {
 	        this.bear.runLeft();
+	        // this.playerLocation.set();
+	        // playerLocations.set("test");
 
 	    } else if (cursors.right.isDown) {
 	        this.bear.runRight();
+	  		// this.playerLocations.set("this old man");
+	  		// playerLocations.set("test");
 
 	    } else {
 	        this.bear.stop();
+	        // this.playerLocation.set();
 	    }
 
 	    if (cursors.up.isDown && this.bear.body.onFloor()) {
 	        this.bear.jump();
+	        // this.playerLocation.set();
 	    }
 
 	    if (gameOver === true) {

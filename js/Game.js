@@ -21,6 +21,7 @@ var Bear = function(game, x, y, frame) {
     this.body.collideWorldBounds = true;
     this.body.gravity.y = 600;
     this.body.maxVelocity = 1000;
+    this.game.camera.follow(this);
 
     this.animations.add('left', [1, 2, 3, 4, 5, 6], 15, true);
     this.animations.add('right', [1, 2, 3, 4, 5, 6], 15, true);
@@ -66,8 +67,32 @@ Bear.prototype.win = function(){
 };
 
 Game.prototype = {
+
 	restartGame: function() {
 		this.game.state.start('Game');
+	},
+
+	makeSnow: function(object) {
+		object.makeParticles('snow');
+		object.width = this.world.width;
+		object.minParticleScale = 0.4;
+		object.maxParticleScale = 0.8;
+		object.setYSpeed(300, 500);
+		object.setXSpeed(-500, -1000);
+		object.minRotation = 0;
+		object.maxRotation = 0;
+		object.start(false, 1600, 5, 0);
+	},
+
+	makeRain: function(object) {
+		this.physics.enable(object, Phaser.Physics.ARCADE)
+		object.width = this.world.width;
+		object.makeParticles('fish');
+		object.setYSpeed(300, 500);
+		object.setXSpeed(-500, -1000);
+		object.minRotation = 360;
+		object.maxRotation = 90;
+		object.start(false, 1600, 5, 0);
 	},
 
 	create: function() {
@@ -90,31 +115,14 @@ Game.prototype = {
 	    map.setCollisionBetween(1, 100000, true, 'Tile Layer 1');
 	    layer.resizeWorld();
 
-	    snow = this.add.emitter(this.world.centerX, 0, 1000);
-	    snow.width = this.world.width;
-	    snow.makeParticles('snow');
-	    snow.minParticleScale = 0.4;
-	    snow.maxParticleScale = 0.8;
-	    snow.setYSpeed(300, 500);
-	    snow.setXSpeed(-500, -1000);
-	    snow.minRotation = 0;
-	    snow.maxRotation = 0;
-	    snow.start(false, 1600, 5, 0);
-
 	    this.bear = new Bear(this.game, 500, 500);
-	    this.game.physics.enable(this.bear, Phaser.Physics.ARCADE);
 	    this.game.add.existing(this.bear);
-	    this.game.camera.follow(this.bear);
+
+	    snow = this.add.emitter(this.world.centerX, 0, 1000);
+	    this.makeSnow(snow);
 
 	    hardRain = this.add.emitter(this.world.centerX, 0, 100);
-	    this.physics.enable(hardRain, Phaser.Physics.ARCADE)
-	    hardRain.width = this.world.width;
-	    hardRain.makeParticles('fish');
-	    hardRain.setYSpeed(300, 500);
-	    hardRain.setXSpeed(-500, -1000);
-	    hardRain.minRotation = 360;
-	    hardRain.maxRotation = 90;
-	    hardRain.start(false, 1600, 5, 0);
+	    this.makeRain(hardRain);
 
 	    chaser = this.add.sprite(0, 0, 'chaser');
 	   	chaser.animations.add('chase');
