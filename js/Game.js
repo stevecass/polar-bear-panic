@@ -53,14 +53,11 @@ Bear.prototype.stop = function(){
     this.animations.stop();
     this.frame = 2;
 };
-<<<<<<< HEAD
 
 Bear.prototype.die = function(){
 	this.game.add.text(this.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
 	this.kill();
 }
-=======
->>>>>>> add gameover state, add finish line to trigger gameover state
 
 Game.prototype = {
 	restartGame: function() {
@@ -132,20 +129,7 @@ Game.prototype = {
 	    chaser.body.velocity.x = 290;
 
         if (this.game.physics.arcade.overlap(this.bear, chaser)) {
-<<<<<<< HEAD
         	this.bear.die();
-=======
-            console.log("Overlapping");
-            this.game.add.text(this.bear.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
-            this.bear.kill();
-            this.game.state.start("Over");
-        };
-
-        if (this.game.physics.arcade.overlap(this.bear, pole)) {
-            console.log("Finish");
-            this.game.add.text(this.bear.position.x, 300, 'You Made It!\n    :)', { fill: '#ffffff' });
-            this.game.state.start("Over");
->>>>>>> add gameover state, add finish line to trigger gameover state
         };
 
 	    if (cursors.left.isDown) {
