@@ -33,25 +33,22 @@ Bear.prototype.constructor = Bear;
 
   // RIGHT MOVEMENT
 Bear.prototype.runRight = function(){
-  this.body.drag.x = 200;
-  this.body.velocity.x = 400;
+  this.body.velocity.x = 450;
   this.scale.x = 1;
   this.animations.play('right');
 };
   // LEFT MOVEMENT
 Bear.prototype.runLeft = function(){
-  this.body.drag.x = 200;
-  this.body.velocity.x = -400;
+  this.body.velocity.x = -450;
   this.scale.x = -1;
   this.animations.play('left');
 };
   //JUMPING
 Bear.prototype.jump = function(){
-    this.body.velocity.y = -600;
+    this.body.velocity.y = -610;
 };
 
 Bear.prototype.stop = function(){
-    this.body.drag.x = 200;
     this.animations.stop();
     this.frame = 2;
 }
@@ -101,6 +98,8 @@ Game.prototype = {
 	    hardRain.start(false, 1600, 5, 0);
 
 	    chaser = this.add.sprite(0, 0, 'chaser');
+	   	chaser.animations.add('chase');
+	   	chaser.animations.play('chase', 7, true);
 	    this.game.physics.enable(chaser, Phaser.Physics.ARCADE);
 	    chaser.body.collideWorldBounds = true;
 
@@ -110,7 +109,7 @@ Game.prototype = {
 		this.game.physics.arcade.collide(this.bear, layer);
 	    this.game.physics.arcade.collide(this.bear, hardRain);
 
-	    chaser.body.velocity.x = 100;
+	    chaser.body.velocity.x = 300;
 
         if (this.game.physics.arcade.overlap(this.bear, chaser)) {
             console.log("Overlapping");

@@ -1,9 +1,9 @@
 <!-- <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8" />
+    <meta charset="UTF-8" />
     <title>Polar Bear Panic</title>
-	<script type="text/javascript" src="js/phaser.min.js"></script>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
     <style type="text/css">
         canvas {
             margin: auto;
@@ -28,7 +28,7 @@ function preload() {
     game.load.image('kenney', 'assets/kenney.png');
     game.load.tilemap('map', 'assets/block_platform_snow.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.spritesheet('snow', 'assets/snow.png', 17, 17);
-    game.load.spritesheet('bear', 'assets/bear.png', 90, 50, 3);
+    game.load.spritesheet('bear', 'assets/polar_sprite.png', 90, 50, 5);
     game.load.spritesheet('fish', 'assets/fish.png', 25, 45);
     game.load.spritesheet('iceberg', 'assets/iceberg.png', 110, 76);
 
@@ -72,14 +72,14 @@ function create() {
     snow.maxRotation = 0;
     snow.start(false, 1600, 5, 0);
 
-    bear = game.add.sprite(0, 500, 'bear', 2);
+    bear = game.add.sprite(0, 500, 'bear', 1);
     game.physics.enable(bear, Phaser.Physics.ARCADE);
     bear.body.collideWorldBounds = true;
     bear.body.gravity.y = 600;
     bear.body.maxVelocity = 1000;
     game.camera.follow(bear);
-    bear.animations.add('left', [0, 1], 10, true);
-    bear.animations.add('right', [0, 1], 10, true);
+    bear.animations.add('left', [1, 2, 3, 4], 6, true);
+    bear.animations.add('right', [1, 2, 3, 4], 6, true);
     bear.anchor.setTo(.5);
 
     hardRain = game.add.emitter(game.world.centerX, 0, 100);
@@ -116,7 +116,7 @@ function update() {
     } else {
 
         bear.animations.stop;
-        bear.frame = 2;
+        bear.frame = 0;
     }
 
     if (cursors.up.isDown && bear.body.onFloor()) {
@@ -128,5 +128,4 @@ function update() {
 
 </script>
 </body>
-</html>
- -->
+</html> -->
