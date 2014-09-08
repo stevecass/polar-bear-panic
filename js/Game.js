@@ -10,6 +10,7 @@ Game = function(game) {
 	gameOver = false;
 	chaser = null;
 	pole = null;
+  warmth = null;
 };
 
 var Bear = function(game, x, y, frame) {
@@ -90,11 +91,16 @@ Game.prototype = {
 	},
 
 	chase: function(object){
-		object.animations.add('chase');
-		object.animations.play('chase', 7, true);
+		// object.animations.add('chase');
+		// object.animations.play('chase', 7, true);
 		this.game.physics.enable(object, Phaser.Physics.ARCADE);
 		object.body.collideWorldBounds = true;
 	},
+
+  warm: function(object){
+    this.game.physics.enable(object, Phaser.Physics.ARCADE);
+    object.body.collideWorldBounds = true;
+  },
 
 	create: function() {
 
@@ -128,6 +134,9 @@ Game.prototype = {
     chaser = this.add.sprite(0, 0, 'chaser');
     this.chase(chaser);
 
+    warmth = this.add.sprite(0,0, 'warmth');
+    this.warm(warmth);
+
     pole = this.add.sprite( 11715, 200, 'pole');
     this.game.physics.enable(pole, Phaser.Physics.ARCADE);
 	},
@@ -143,7 +152,10 @@ Game.prototype = {
     this.game.physics.arcade.collide(this.bear, hardRain);
     this.game.physics.arcade.collide(pole, layer);
 
-    chaser.body.velocity.x = 290;
+    globalWarmingSpeed = 300;
+
+    chaser.body.velocity.x = globalWarmingSpeed;
+    warmth.body.velocity.x = globalWarmingSpeed;
 
       if (this.game.physics.arcade.overlap(this.bear, chaser)) {
       	this.bear.die();
