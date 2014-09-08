@@ -21,8 +21,8 @@ var Bear = function(game, x, y, frame) {
     this.body.gravity.y = 600;
     this.body.maxVelocity = 1000;
 
-    this.animations.add('left', [0, 1], 10, true);
-    this.animations.add('right', [0, 1], 10, true);
+    this.animations.add('left', [1, 2, 3, 4, 5, 6], 15, true);
+    this.animations.add('right', [1, 2, 3, 4, 5, 6], 15, true);
     this.anchor.setTo(.5);
     this.body.drag.x = 800;
 
