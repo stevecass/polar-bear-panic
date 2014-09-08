@@ -57,7 +57,13 @@ Bear.prototype.stop = function(){
 Bear.prototype.die = function(){
 	this.game.add.text(this.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
 	this.kill();
-}
+	this.game.state.start("Over");
+};
+
+Bear.prototype.win = function(){
+    this.game.add.text(this.position.x, 300, 'You Made It!\n    :)', { fill: '#ffffff' });
+    this.game.state.start("Over");
+};
 
 Game.prototype = {
 	restartGame: function() {
@@ -115,12 +121,8 @@ Game.prototype = {
 
 	    pole = this.add.sprite( 11715, 200, 'pole');
 	    this.game.physics.enable(pole, Phaser.Physics.ARCADE);
-
-
-
-
-
 	},
+
 	update : function() {
 		this.game.physics.arcade.collide(this.bear, layer);
 	    this.game.physics.arcade.collide(this.bear, hardRain);
@@ -130,7 +132,11 @@ Game.prototype = {
 
         if (this.game.physics.arcade.overlap(this.bear, chaser)) {
         	this.bear.die();
-        };
+        }
+
+        if (this.game.physics.arcade.overlap(this.bear, pole)) {
+        	this.bear.win();
+        }
 
 	    if (cursors.left.isDown) {
 	        this.bear.runLeft();
