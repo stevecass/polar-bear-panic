@@ -3,11 +3,14 @@
 <head>
 	<meta charset="UTF-8" />
     <title>Polar Bear Panic</title>
-	<script type="text/javascript" src="js/phaser.min.js"></script>
-    <script src= "js/Preloader.js"></script>
-    <script src= "js/MainMenu.js"></script>
-    <script src= "js/Game.js"></script>
+
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+    <script src="js/Preloader.js"></script>
+    <script src="js/MainMenu.js"></script>
+    <script src="js/Game.js"></script>
     <script src= "js/Over.js"></script>
+
     <style type="text/css">
         canvas {
             margin: auto;
@@ -19,13 +22,12 @@
             right: 0;
         }
     </style>
+    
 </head>
 <body>
-
     <script>
     (function() {
-
-        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
         game.state.add('Preloader', Preloader);
         game.state.add('MainMenu', MainMenu);
         game.state.add('Game', Game);
