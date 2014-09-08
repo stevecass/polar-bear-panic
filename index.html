@@ -20,10 +20,9 @@
     </style>
 </head>
 <body>
-
     <script>
     (function() {
-        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
         game.state.add('Preloader', Preloader);
         game.state.add('MainMenu', MainMenu);
         game.state.add('Game', Game);
