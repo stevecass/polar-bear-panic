@@ -3,6 +3,8 @@ Preloader = function(game) {};
 
 Preloader.prototype = {
 	preload:function() {
+        this.game.load.image('screen-mainmenu', 'assets/screen-mainmenu.png');
+        this.game.load.image('button-start', 'assets/button-start.png');
 		this.game.load.image('sky', 'assets/sky2.png');
     	this.game.load.image('kenney', 'assets/kenney.png');
     	this.game.load.tilemap('map', 'assets/final_course.json', null, Phaser.Tilemap.TILED_JSON);
