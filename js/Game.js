@@ -116,7 +116,7 @@ Game.prototype = {
     map.setCollisionBetween(1, 100000, true, 'Tile Layer 1');
     layer.resizeWorld();
 
-    this.bear = new Bear(this.game, 500, 500);
+    this.bear = new Bear(this.game, 900, 500);
     this.game.add.existing(this.bear);
 
     snow = this.add.emitter(this.world.centerX, 0, 1000);
