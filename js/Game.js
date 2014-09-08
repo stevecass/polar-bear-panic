@@ -9,6 +9,7 @@ Game = function(game) {
 	iceberg = null;
 	gameOver = false;
 	chaser = null;
+	pole = null;
 };
 
 var Bear = function(game, x, y, frame) {
@@ -45,7 +46,7 @@ Bear.prototype.runLeft = function(){
 };
   //JUMPING
 Bear.prototype.jump = function(){
-    this.body.velocity.y = -610;
+    this.body.velocity.y = -600;
 };
 
 Bear.prototype.stop = function(){
@@ -56,9 +57,19 @@ Bear.prototype.stop = function(){
 Bear.prototype.die = function(){
 	this.game.add.text(this.position.x, 300, 'YOU DIED!\n    :(', { fill: '#ffffff' });
 	this.kill();
-}
+	this.game.state.start("Over");
+};
+
+Bear.prototype.win = function(){
+    this.game.add.text(this.position.x, 300, 'You Made It!\n    :)', { fill: '#ffffff' });
+    this.game.state.start("Over");
+};
 
 Game.prototype = {
+	restartGame: function() {
+		this.game.state.start('Game');
+	},
+
 	create: function() {
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	    this.game.physics.arcade.gravity.y = 300;
@@ -108,17 +119,24 @@ Game.prototype = {
 	    this.game.physics.enable(chaser, Phaser.Physics.ARCADE);
 	    chaser.body.collideWorldBounds = true;
 
-
+	    pole = this.add.sprite( 11715, 200, 'pole');
+	    this.game.physics.enable(pole, Phaser.Physics.ARCADE);
 	},
+
 	update : function() {
 		this.game.physics.arcade.collide(this.bear, layer);
 	    this.game.physics.arcade.collide(this.bear, hardRain);
+	    this.game.physics.arcade.collide(pole, layer);
 
-	    chaser.body.velocity.x = 300;
+	    chaser.body.velocity.x = 290;
 
         if (this.game.physics.arcade.overlap(this.bear, chaser)) {
         	this.bear.die();
-        };
+        }
+
+        if (this.game.physics.arcade.overlap(this.bear, pole)) {
+        	this.bear.win();
+        }
 
 	    if (cursors.left.isDown) {
 	        this.bear.runLeft();
