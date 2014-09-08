@@ -55,6 +55,9 @@ Bear.prototype.stop = function(){
 
 Game.prototype = {
 	create: function() {
+
+		// var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
+
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	    this.game.physics.arcade.gravity.y = 300;
 
@@ -106,6 +109,12 @@ Game.prototype = {
 
 	},
 	update : function() {
+		// this.playerLocations.set("test");
+		var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
+		playerLocations.on('value', function (snapshot) {
+		  console.log(snapshot.val());
+		});
+
 		this.game.physics.arcade.collide(this.bear, layer);
 	    this.game.physics.arcade.collide(this.bear, hardRain);
 
@@ -120,10 +129,12 @@ Game.prototype = {
 	    if (cursors.left.isDown) {
 	        this.bear.runLeft();
 	        // this.playerLocation.set();
+	        // playerLocations.set("test");
 
 	    } else if (cursors.right.isDown) {
 	        this.bear.runRight();
-	  		this.playerLocations.set("this old man");
+	  		// this.playerLocations.set("this old man");
+	  		playerLocations.set("test");
 
 	    } else {
 	        this.bear.stop();
