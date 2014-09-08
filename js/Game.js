@@ -129,9 +129,9 @@ Game.prototype = {
 	update : function() {
 		// this.playerLocations.set("test");
 		var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
-		playerLocations.on('value', function (snapshot) {
-		  console.log(snapshot.val());
-		});
+		// playerLocations.on('value', function (snapshot) {
+		//   console.log(snapshot.val());
+		// });
 
 		this.game.physics.arcade.collide(this.bear, layer);
 	    this.game.physics.arcade.collide(this.bear, hardRain);
@@ -155,7 +155,7 @@ Game.prototype = {
 	    } else if (cursors.right.isDown) {
 	        this.bear.runRight();
 	  		// this.playerLocations.set("this old man");
-	  		playerLocations.set("test");
+	  		// playerLocations.set("test");
 
 	    } else {
 	        this.bear.stop();
