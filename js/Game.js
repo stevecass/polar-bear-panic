@@ -119,16 +119,20 @@ Game.prototype = {
 
 	    if (cursors.left.isDown) {
 	        this.bear.runLeft();
+	        // this.playerLocation.set();
 
 	    } else if (cursors.right.isDown) {
 	        this.bear.runRight();
+	  		this.playerLocations.set("this old man");
 
 	    } else {
 	        this.bear.stop();
+	        // this.playerLocation.set();
 	    }
 
 	    if (cursors.up.isDown && this.bear.body.onFloor()) {
 	        this.bear.jump();
+	        // this.playerLocation.set();
 	    }
 
 	    if (gameOver === true) {

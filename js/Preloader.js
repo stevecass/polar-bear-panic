@@ -16,5 +16,7 @@ Preloader.prototype = {
 
 	create: function() {
 		this.game.state.start('MainMenu');
+        var Firebase = require("firebase");
+        var playerLocations = new Firebase('https://fiery-inferno-6891.firebaseio.com');
 	}
 };
