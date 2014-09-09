@@ -10,6 +10,9 @@ Game = function(game) {
 	chaser = null;
 	pole = null;
   warmth = null;
+
+  jumpSfx = null;
+  fishSfx = null;
 };
 
 var Lake = function(game, x, y, width, height) {
@@ -119,6 +122,9 @@ Game.prototype = {
     this.game.physics.arcade.gravity.y = 300;
 
     cursors = this.input.keyboard.createCursorKeys();
+
+    jumpSfx = this.game.add.audio('jump1');
+    fishSfx = this.game.add.audio('fish');
 
     sky = this.add.image(0, 0, 'sky');
     sky.fixedToCamera = true;
@@ -295,6 +301,10 @@ Game.prototype = {
     chaser.body.velocity.x = globalWarmingSpeed;
     warmth.body.velocity.x = globalWarmingSpeed;
 
+    if (this.game.physics.arcade.collide(this.bear, hardRain)) {
+      fishSfx.play('',0,1,false,false);
+    }
+
       if (this.game.physics.arcade.overlap(this.bear, iceBergs)) {
         this.bear.body.velocity.x = -800;
       }
@@ -423,6 +433,7 @@ Game.prototype = {
 
     if (cursors.up.isDown && this.bear.body.onFloor()) {
         this.bear.jump();
+        jumpSfx.play('',0,1,false,false);
         // this.playerLocation.set();
     }
 
