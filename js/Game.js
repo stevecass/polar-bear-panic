@@ -12,6 +12,17 @@ Game = function(game) {
   warmth = null;
 };
 
+var Lake = function(game, x, y, width, height) {
+  Phaser.TileSprite.call(this, game, x, y, width, height, 'lakes');
+  this.autoScroll(-200,0);
+
+  this.game.physics.arcade.enableBody(this);
+  this.body.collideWorldBounds = true;
+}
+
+Lake.prototype = Object.create(Phaser.TileSprite.prototype);
+Lake.prototype.constructor = Lake;
+
 var Bear = function(game, x, y, frame) {
     Phaser.Sprite.call(this, game, x, y, 'bear', frame);
     this.game.physics.arcade.enableBody(this);
@@ -122,6 +133,9 @@ Game.prototype = {
 
     this.bear = new Bear(this.game, 900, 500);
     this.game.add.existing(this.bear);
+
+    this.lake = new Lake(this.game, 0, 565, 12600, 70);
+    this.game.add.existing(this.lake);
 
     snowFlakes = this.add.emitter(this.world.centerX, 0, 1000);
     snowFlakes.makeParticles('snowFlakes');
@@ -275,7 +289,7 @@ Game.prototype = {
     this.game.physics.arcade.collide(layer, iceBergs9);
     this.game.physics.arcade.collide(layer, iceBergs10);
 
-    globalWarmingSpeed = 70;
+    globalWarmingSpeed = 250;
 
 
     chaser.body.velocity.x = globalWarmingSpeed;
@@ -313,6 +327,37 @@ Game.prototype = {
       if (this.game.physics.arcade.overlap(this.bear, iceBergs10)) {
         this.bear.body.velocity.x = -800;
       }
+
+      if (this.game.physics.arcade.overlap(this.bear, this.lake)) {
+        Bear.prototype.runRight = function(){
+          this.body.velocity.x = 165;
+          this.scale.x = 1;
+          this.animations.play('right');
+        };
+        Bear.prototype.runLeft = function(){
+          this.body.velocity.x = -165;
+          this.scale.x = -1;
+          this.animations.play('left');
+        };
+        Bear.prototype.jump = function(){
+          this.body.velocity.y = -375;
+        };
+      } else {
+        Bear.prototype.runRight = function(){
+          this.body.velocity.x = 450;
+          this.scale.x = 1;
+          this.animations.play('right');
+        };
+        Bear.prototype.runLeft = function(){
+          this.body.velocity.x = -450;
+          this.scale.x = -1;
+          this.animations.play('left');
+        };
+        Bear.prototype.jump = function(){
+          this.body.velocity.y = -600;
+        };
+      }
+
       if (this.game.physics.arcade.overlap(this.bear, chaser)) {
       	this.bear.die();
       }
