@@ -356,6 +356,36 @@ Game.prototype = {
         };
       }
 
+      if (this.game.physics.arcade.overlap(this.bear, this.lake)) {
+        Bear.prototype.runRight = function(){
+          this.body.velocity.x = 165;
+          this.scale.x = 1;
+          this.animations.play('right');
+        };
+        Bear.prototype.runLeft = function(){
+          this.body.velocity.x = -165;
+          this.scale.x = -1;
+          this.animations.play('left');
+        };
+        Bear.prototype.jump = function(){
+          this.body.velocity.y = -375;
+        };
+      } else {
+        Bear.prototype.runRight = function(){
+          this.body.velocity.x = 450;
+          this.scale.x = 1;
+          this.animations.play('right');
+        };
+        Bear.prototype.runLeft = function(){
+          this.body.velocity.x = -450;
+          this.scale.x = -1;
+          this.animations.play('left');
+        };
+        Bear.prototype.jump = function(){
+          this.body.velocity.y = -600;
+        };
+      }
+
       if (this.game.physics.arcade.overlap(this.bear, chaser)) {
       	this.bear.die();
       }
