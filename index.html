@@ -13,6 +13,7 @@
     <script src="js/Game.js"></script>
     <script src= "js/Over.js"></script>
 
+
     <style type="text/css">
         canvas {
             margin: auto;
@@ -34,6 +35,8 @@
             game.state.add('Preloader', Preloader);
             game.state.add('MainMenu', MainMenu);
             game.state.add('Game', Game);
+            // game.state.add('Multiplayer', Multiplayer);
+            // game.state.add('Instructions', Instructions);
             game.state.add('Over', Over);
             game.state.start('Preloader');
         })();

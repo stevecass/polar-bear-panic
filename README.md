@@ -5,7 +5,7 @@ Polar Bear Panic!
 - [Derek Johnson](https://github.com/CothOmega)
 - [Garrett Dalton](https://github.com/garrettdalton)
 - [George Zeng](https://github.com/georgexzeng)
-- [Ryan Stoberg](https://github.com/ryanstorberg)
+- [Ryan Storberg](https://github.com/ryanstorberg)
 
 
 Polar Bear Panic is a side-scrolling race with your friends!
