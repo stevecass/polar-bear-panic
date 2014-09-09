@@ -16,7 +16,7 @@ Preloader.prototype = {
         this.game.load.spritesheet('snow', 'assets/snow.png', 17, 17);
     	this.game.load.spritesheet('bear', 'assets/polar_sprite.png', 90, 50, 7);
     	this.game.load.spritesheet('fish', 'assets/fish.png', 25, 45);
-    	// this.game.load.spritesheet('iceberg', 'assets/iceberg.png', 110, 76);
+    	this.game.load.spritesheet('iceberg', 'assets/iceberg.png', 90, 62);
     	this.game.load.spritesheet('chaser', 'assets/sunKill6.png', 600, 700);
         this.game.load.spritesheet('pole', 'assets/northPole.png', 25, 200);
         this.game.load.spritesheet('warmth', 'assets/bigTransparentcircle.png', 1400, 700);
