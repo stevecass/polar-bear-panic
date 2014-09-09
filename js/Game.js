@@ -275,7 +275,7 @@ Game.prototype = {
     this.game.physics.arcade.collide(layer, iceBergs9);
     this.game.physics.arcade.collide(layer, iceBergs10);
 
-    globalWarmingSpeed = 70;
+    globalWarmingSpeed = 180;
 
 
     chaser.body.velocity.x = globalWarmingSpeed;
