@@ -89,20 +89,6 @@ Game.prototype = {
 		object.start(false, 1600, 5, 0);
 	},
 
-  iceBergxPosit = 0;
-  makeIceBergs: function() {
-    iceBergs = this.game.add.group();
-    iceBergs.enableBody = true;
-    iceBergs.physicsBodyType = Phaser.Physics.ARCADE;
-    iceBergxPosit += 1175;
-    for (var i = 0; i < 7; i++){
-      var iceBerg = iceBergs.create(iceBergxPosit + i * 48, 50, 'iceberg');
-      iceBerg.body.collideWorldBounds = true;
-      iceBerg.body.gravity.x = this.game.rnd.integerInRange(-75,50);
-      iceBerg.body.gravity.y = 100 + Math.random() * 100;
-    }
-  }
-
 	chase: function(object){
 		// object.animations.add('chase');
 		// object.animations.play('chase', 7, true);
@@ -144,8 +130,114 @@ Game.prototype = {
     hardRain = this.add.emitter(this.world.centerX, 0, 100);
     this.makeRain(hardRain);
 
-    for (n = 0; n < 10; n++){
-      this.game.makeIceBergs();
+    iceBergs = this.game.add.group();
+    iceBergs.enableBody = true;
+    iceBergs.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 4; i++){
+      var iceBerg = iceBergs.create(1475 + i * 48, 50, 'iceberg');
+      iceBerg.body.collideWorldBounds = true;
+      iceBerg.body.gravity.x = this.game.rnd.integerInRange(-75,50);
+      iceBerg.body.gravity.y = 100 + Math.random() * 100;
+    }
+
+    iceBergs2 = this.game.add.group();
+    iceBergs2.enableBody = true;
+    iceBergs2.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 7; i++){
+      var iceBerg2 = iceBergs2.create(2350 + i * 48, 50, 'iceberg');
+      iceBerg2.body.collideWorldBounds = true;
+      iceBerg2.body.gravity.x = this.game.rnd.integerInRange(-50,50);
+      iceBerg2.body.gravity.y = 100 + Math.random() * 100;
+    }
+
+    iceBergs3 = this.game.add.group();
+    iceBergs3.enableBody = true;
+    iceBergs3.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 7; i++){
+      var iceBerg3 = iceBergs3.create(3250 + i * 48, 50, 'iceberg');
+      iceBerg3.body.collideWorldBounds = true;
+      iceBerg3.body.gravity.x = this.game.rnd.integerInRange(-50,50);
+      iceBerg3.body.gravity.y = 100 + Math.random() * 100;
+    }
+
+    iceBergs4 = this.game.add.group();
+    iceBergs4.enableBody = true;
+    iceBergs4.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 7; i++){
+      var iceBerg4 = iceBergs4.create(4550 + i * 48, 50, 'iceberg');
+      iceBerg4.body.collideWorldBounds = true;
+      iceBerg4.body.gravity.x = this.game.rnd.integerInRange(-50,50);
+      iceBerg4.body.gravity.y = 100 + Math.random() * 100;
+    }
+
+    iceBergs5 = this.game.add.group();
+    iceBergs5.enableBody = true;
+    iceBergs5.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 7; i++){
+      var iceBerg5 = iceBergs5.create(5250 + i * 48, 50, 'iceberg');
+      iceBerg5.body.collideWorldBounds = true;
+      iceBerg5.body.gravity.x = this.game.rnd.integerInRange(-50,50);
+      iceBerg5.body.gravity.y = 100 + Math.random() * 100;
+    }
+
+    iceBergs6 = this.game.add.group();
+    iceBergs6.enableBody = true;
+    iceBergs6.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 7; i++){
+      var iceBerg6 = iceBergs6.create(5650 + i * 48, 50, 'iceberg');
+      iceBerg6.body.collideWorldBounds = true;
+      iceBerg6.body.gravity.x = this.game.rnd.integerInRange(-50,50);
+      iceBerg6.body.gravity.y = 100 + Math.random() * 100;
+    }
+
+    iceBergs7 = this.game.add.group();
+    iceBergs7.enableBody = true;
+    iceBergs7.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 7; i++){
+      var iceBerg7 = iceBergs7.create(6250 + i * 48, 50, 'iceberg');
+      iceBerg7.body.collideWorldBounds = true;
+      iceBerg7.body.gravity.x = this.game.rnd.integerInRange(-50,50);
+      iceBerg7.body.gravity.y = 100 + Math.random() * 100;
+    }
+
+    iceBergs8 = this.game.add.group();
+    iceBergs8.enableBody = true;
+    iceBergs8.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 10; i++){
+      var iceBerg8 = iceBergs8.create(6850 + i * 48, 50, 'iceberg');
+      iceBerg8.body.collideWorldBounds = true;
+      iceBerg8.body.gravity.x = this.game.rnd.integerInRange(-50,50);
+      iceBerg8.body.gravity.y = 100 + Math.random() * 100;
+    }
+
+    iceBergs9 = this.game.add.group();
+    iceBergs9.enableBody = true;
+    iceBergs9.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 10; i++){
+      var iceBerg9 = iceBergs9.create(9050 + i * 48, 50, 'iceberg');
+      iceBerg9.body.collideWorldBounds = true;
+      iceBerg9.body.gravity.x = this.game.rnd.integerInRange(-50,50);
+      iceBerg9.body.gravity.y = 100 + Math.random() * 100;
+    }
+
+    iceBergs10 = this.game.add.group();
+    iceBergs10.enableBody = true;
+    iceBergs10.physicsBodyType = Phaser.Physics.ARCADE;
+
+    for (var i = 0; i < 10; i++){
+      var iceBerg10 = iceBergs10.create(10450 + i * 48, 50, 'iceberg');
+      iceBerg10.body.collideWorldBounds = true;
+      iceBerg10.body.gravity.x = this.game.rnd.integerInRange(-50,50);
+      iceBerg10.body.gravity.y = 100 + Math.random() * 100;
     }
 
     chaser = this.add.sprite(0, 0, 'chaser');
@@ -169,16 +261,53 @@ Game.prototype = {
     this.game.physics.arcade.collide(this.bear, hardRain);
     this.game.physics.arcade.collide(pole, layer);
     this.game.physics.arcade.collide(layer, iceBergs);
+    this.game.physics.arcade.collide(layer, iceBergs2);
+    this.game.physics.arcade.collide(layer, iceBergs3);
+    this.game.physics.arcade.collide(layer, iceBergs4);
+    this.game.physics.arcade.collide(layer, iceBergs5);
+    this.game.physics.arcade.collide(layer, iceBergs6);
+    this.game.physics.arcade.collide(layer, iceBergs7);
+    this.game.physics.arcade.collide(layer, iceBergs8);
+    this.game.physics.arcade.collide(layer, iceBergs9);
+    this.game.physics.arcade.collide(layer, iceBergs10);
 
-    // globalWarmingSpeed = 300;
+    globalWarmingSpeed = 70;
 
-    // chaser.body.velocity.x = globalWarmingSpeed;
-    // warmth.body.velocity.x = globalWarmingSpeed;
+    chaser.body.velocity.x = globalWarmingSpeed;
+    warmth.body.velocity.x = globalWarmingSpeed;
 
       if (this.game.physics.arcade.overlap(this.bear, iceBergs)) {
         this.bear.body.velocity.x = -800;
       }
 
+      if (this.game.physics.arcade.overlap(this.bear, iceBergs2)) {
+        this.bear.body.velocity.x = -800;
+      }
+
+      if (this.game.physics.arcade.overlap(this.bear, iceBergs3)) {
+        this.bear.body.velocity.x = -800;
+      }
+      if (this.game.physics.arcade.overlap(this.bear, iceBergs4)) {
+        this.bear.body.velocity.x = -800;
+      }
+      if (this.game.physics.arcade.overlap(this.bear, iceBergs5)) {
+        this.bear.body.velocity.x = -800;
+      }
+      if (this.game.physics.arcade.overlap(this.bear, iceBergs6)) {
+        this.bear.body.velocity.x = -800;
+      }
+      if (this.game.physics.arcade.overlap(this.bear, iceBergs7)) {
+        this.bear.body.velocity.x = -800;
+      }
+      if (this.game.physics.arcade.overlap(this.bear, iceBergs8)) {
+        this.bear.body.velocity.x = -800;
+      }
+      if (this.game.physics.arcade.overlap(this.bear, iceBergs9)) {
+        this.bear.body.velocity.x = -800;
+      }
+      if (this.game.physics.arcade.overlap(this.bear, iceBergs10)) {
+        this.bear.body.velocity.x = -800;
+      }
       if (this.game.physics.arcade.overlap(this.bear, chaser)) {
       	this.bear.die();
       }
@@ -190,12 +319,48 @@ Game.prototype = {
     if (cursors.left.isDown) {
       if (this.game.physics.arcade.collide(this.bear, iceBergs) === true){
       }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs2) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs3) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs4) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs5) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs6) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs7) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs8) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs9) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs10) === true){
+      }
       this.bear.runLeft();
       // this.playerLocation.set();
       // playerLocations.set("test");
 
     } else if (cursors.right.isDown) {
       if (this.game.physics.arcade.collide(this.bear, iceBergs) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs2) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs3) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs4) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs5) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs6) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs7) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs8) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs9) === true){
+      }
+      if (this.game.physics.arcade.collide(this.bear, iceBergs10) === true){
       }
       this.bear.runRight();
   		// this.playerLocations.set("this old man");
