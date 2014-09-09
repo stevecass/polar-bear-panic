@@ -291,7 +291,6 @@ Game.prototype = {
 
     globalWarmingSpeed = 250;
 
-
     chaser.body.velocity.x = globalWarmingSpeed;
     warmth.body.velocity.x = globalWarmingSpeed;
 
