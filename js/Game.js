@@ -6,7 +6,6 @@ Game = function(game) {
 	snow = null;
 	bear = null;
 	hardRain = null;
-	iceberg = null;
 	gameOver = false;
 	chaser = null;
 	pole = null;
@@ -47,7 +46,7 @@ Bear.prototype.jump = function(){
 
 Bear.prototype.stop = function(){
     this.animations.stop();
-    this.frame = 2;
+    this.frame = 0;
 };
 
 Bear.prototype.die = function(){
@@ -90,6 +89,20 @@ Game.prototype = {
 		object.start(false, 1600, 5, 0);
 	},
 
+  iceBergxPosit = 0;
+  makeIceBergs: function() {
+    iceBergs = this.game.add.group();
+    iceBergs.enableBody = true;
+    iceBergs.physicsBodyType = Phaser.Physics.ARCADE;
+    iceBergxPosit += 1175;
+    for (var i = 0; i < 7; i++){
+      var iceBerg = iceBergs.create(iceBergxPosit + i * 48, 50, 'iceberg');
+      iceBerg.body.collideWorldBounds = true;
+      iceBerg.body.gravity.x = this.game.rnd.integerInRange(-75,50);
+      iceBerg.body.gravity.y = 100 + Math.random() * 100;
+    }
+  }
+
 	chase: function(object){
 		// object.animations.add('chase');
 		// object.animations.play('chase', 7, true);
@@ -131,6 +144,10 @@ Game.prototype = {
     hardRain = this.add.emitter(this.world.centerX, 0, 100);
     this.makeRain(hardRain);
 
+    for (n = 0; n < 10; n++){
+      this.game.makeIceBergs();
+    }
+
     chaser = this.add.sprite(0, 0, 'chaser');
     this.chase(chaser);
 
@@ -151,11 +168,16 @@ Game.prototype = {
 		this.game.physics.arcade.collide(this.bear, layer);
     this.game.physics.arcade.collide(this.bear, hardRain);
     this.game.physics.arcade.collide(pole, layer);
+    this.game.physics.arcade.collide(layer, iceBergs);
 
-    globalWarmingSpeed = 300;
+    // globalWarmingSpeed = 300;
 
-    chaser.body.velocity.x = globalWarmingSpeed;
-    warmth.body.velocity.x = globalWarmingSpeed;
+    // chaser.body.velocity.x = globalWarmingSpeed;
+    // warmth.body.velocity.x = globalWarmingSpeed;
+
+      if (this.game.physics.arcade.overlap(this.bear, iceBergs)) {
+        this.bear.body.velocity.x = -800;
+      }
 
       if (this.game.physics.arcade.overlap(this.bear, chaser)) {
       	this.bear.die();
@@ -166,12 +188,16 @@ Game.prototype = {
       }
 
     if (cursors.left.isDown) {
-        this.bear.runLeft();
-        // this.playerLocation.set();
-        // playerLocations.set("test");
+      if (this.game.physics.arcade.collide(this.bear, iceBergs) === true){
+      }
+      this.bear.runLeft();
+      // this.playerLocation.set();
+      // playerLocations.set("test");
 
     } else if (cursors.right.isDown) {
-        this.bear.runRight();
+      if (this.game.physics.arcade.collide(this.bear, iceBergs) === true){
+      }
+      this.bear.runRight();
   		// this.playerLocations.set("this old man");
   		// playerLocations.set("test");
 
