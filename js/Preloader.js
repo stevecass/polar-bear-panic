@@ -22,6 +22,9 @@ Preloader.prototype = {
         this.game.load.spritesheet('pole', 'assets/northPole.png', 25, 200);
         this.game.load.spritesheet('warmth', 'assets/bigTransparentcircle.png', 1400, 700);
 
+        this.game.load.audio('jump1', ['assets/jump1.mp3']);
+        this.game.load.audio('fish', ['assets/fishslap1.mp3']);
+
 
 	},
 
