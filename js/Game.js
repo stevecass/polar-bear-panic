@@ -74,6 +74,15 @@ Bear.prototype.win = function(){
     this.game.state.start("Over");
 };
 
+var Iceberg = function(game, x, y, frame) {
+    Phaser.Sprite.call(this, game, x, y, 'iceberg', frame);
+    this.game.physics.arcade.enableBody(this);
+    this.body.collideWorldBounds = true;
+    this.body.gravity.y = 600;
+    this.body.maxVelocity = 0;
+    this.physicsBodyType = Phaser.Physics.ARCADE;
+};
+
 Game.prototype = {
 
 	restartGame: function() {
@@ -154,11 +163,14 @@ Game.prototype = {
     hardRain = this.add.emitter(this.world.centerX, 0, 100);
     this.makeRain(hardRain);
 
+    this.bear = new Bear(this.game, 900, 500);
+    this.game.add.existing(this.bear);
+
     iceBergs = this.game.add.group();
     iceBergs.enableBody = true;
     iceBergs.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 4; i++){
+    for (var i = 0; i < 2; i++){
       var iceBerg = iceBergs.create(1475 + i * 48, 50, 'iceberg');
       iceBerg.body.collideWorldBounds = true;
       iceBerg.body.gravity.x = this.game.rnd.integerInRange(-75,50);
@@ -169,7 +181,7 @@ Game.prototype = {
     iceBergs2.enableBody = true;
     iceBergs2.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 7; i++){
+    for (var i = 0; i < 2; i++){
       var iceBerg2 = iceBergs2.create(2350 + i * 48, 50, 'iceberg');
       iceBerg2.body.collideWorldBounds = true;
       iceBerg2.body.gravity.x = this.game.rnd.integerInRange(-50,50);
@@ -180,7 +192,7 @@ Game.prototype = {
     iceBergs3.enableBody = true;
     iceBergs3.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 7; i++){
+    for (var i = 0; i < 2; i++){
       var iceBerg3 = iceBergs3.create(3250 + i * 48, 50, 'iceberg');
       iceBerg3.body.collideWorldBounds = true;
       iceBerg3.body.gravity.x = this.game.rnd.integerInRange(-50,50);
@@ -191,7 +203,7 @@ Game.prototype = {
     iceBergs4.enableBody = true;
     iceBergs4.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 7; i++){
+    for (var i = 0; i < 2; i++){
       var iceBerg4 = iceBergs4.create(4550 + i * 48, 50, 'iceberg');
       iceBerg4.body.collideWorldBounds = true;
       iceBerg4.body.gravity.x = this.game.rnd.integerInRange(-50,50);
@@ -202,7 +214,7 @@ Game.prototype = {
     iceBergs5.enableBody = true;
     iceBergs5.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 7; i++){
+    for (var i = 0; i < 2; i++){
       var iceBerg5 = iceBergs5.create(5250 + i * 48, 50, 'iceberg');
       iceBerg5.body.collideWorldBounds = true;
       iceBerg5.body.gravity.x = this.game.rnd.integerInRange(-50,50);
@@ -213,7 +225,7 @@ Game.prototype = {
     iceBergs6.enableBody = true;
     iceBergs6.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 7; i++){
+    for (var i = 0; i < 2; i++){
       var iceBerg6 = iceBergs6.create(5650 + i * 48, 50, 'iceberg');
       iceBerg6.body.collideWorldBounds = true;
       iceBerg6.body.gravity.x = this.game.rnd.integerInRange(-50,50);
@@ -224,7 +236,7 @@ Game.prototype = {
     iceBergs7.enableBody = true;
     iceBergs7.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 7; i++){
+    for (var i = 0; i < 2; i++){
       var iceBerg7 = iceBergs7.create(6250 + i * 48, 50, 'iceberg');
       iceBerg7.body.collideWorldBounds = true;
       iceBerg7.body.gravity.x = this.game.rnd.integerInRange(-50,50);
@@ -235,7 +247,7 @@ Game.prototype = {
     iceBergs8.enableBody = true;
     iceBergs8.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 10; i++){
+    for (var i = 0; i < 20; i++){
       var iceBerg8 = iceBergs8.create(6850 + i * 48, 50, 'iceberg');
       iceBerg8.body.collideWorldBounds = true;
       iceBerg8.body.gravity.x = this.game.rnd.integerInRange(-50,50);
@@ -246,7 +258,7 @@ Game.prototype = {
     iceBergs9.enableBody = true;
     iceBergs9.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 10; i++){
+    for (var i = 0; i < 20; i++){
       var iceBerg9 = iceBergs9.create(9050 + i * 48, 50, 'iceberg');
       iceBerg9.body.collideWorldBounds = true;
       iceBerg9.body.gravity.x = this.game.rnd.integerInRange(-50,50);
@@ -257,7 +269,7 @@ Game.prototype = {
     iceBergs10.enableBody = true;
     iceBergs10.physicsBodyType = Phaser.Physics.ARCADE;
 
-    for (var i = 0; i < 10; i++){
+    for (var i = 0; i < 20; i++){
       var iceBerg10 = iceBergs10.create(10450 + i * 48, 50, 'iceberg');
       iceBerg10.body.collideWorldBounds = true;
       iceBerg10.body.gravity.x = this.game.rnd.integerInRange(-50,50);
