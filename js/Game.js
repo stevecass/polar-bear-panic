@@ -1,4 +1,4 @@
-Game = function(game) {
+var Game = function(game) {
 	var cursors;
 	var sky;
 	var map;
@@ -146,6 +146,9 @@ Game.prototype = {
 
     this.bear = new Bear(this.game, 900, 500);
     this.game.add.existing(this.bear);
+    window.bears[window.localBearKey] = this.bear;
+    window.game = this.game;
+    console.log('stored bear with key ' + window.localBearKey);
 
     this.lake = new Lake(this.game, 0, 565, 12600, 70);
     this.game.add.existing(this.lake);
@@ -186,10 +189,12 @@ Game.prototype = {
 
     pole = this.add.sprite( 12250, 200, 'pole');
     this.game.physics.enable(pole, Phaser.Physics.ARCADE);
+
+
 	},
 
 	update : function() {
-		var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
+		//var playerLocations = new Firebase("https://fiery-inferno-6891.firebaseio.com");
 
 		this.game.physics.arcade.collide(this.bear, layer);
     this.game.physics.arcade.collide(this.bear, hardRain);
@@ -247,25 +252,35 @@ Game.prototype = {
       	this.bear.win();
       }
 
+     var game_event = {
+      key: window.localBearKey,
+      event_type: 0
+
+     } 
+
     if (cursors.left.isDown) {
       if (this.game.physics.arcade.collide(this.bear, iceBergs) === true){
       }
 
-      this.bear.runLeft();
+      game_event.event_type = BEAR_RUN_LEFT;
+      socket.emit('game_event', game_event);
 
     } else if (cursors.right.isDown) {
       if (this.game.physics.arcade.collide(this.bear, iceBergs) === true){
       }
-
-      this.bear.runRight();
+      game_event.event_type = BEAR_RUN_RIGHT;
+      socket.emit('game_event', game_event);
 
     } else {
         this.bear.stop();
     }
 
     if (cursors.up.isDown && this.bear.body.onFloor()) {
-        this.bear.jump();
-        jumpSfx.play('',0,1,false,false);
+      game_event.event_type = BEAR_JUMP;
+      socket.emit('game_event', game_event);
+
+        //this.bear.jump();
+        //jumpSfx.play('',0,1,false,false);
     }
 	}
 };
