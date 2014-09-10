@@ -146,7 +146,9 @@ Game.prototype = {
 
     this.bear = new Bear(this.game, 900, 500);
     this.game.add.existing(this.bear);
-    window.bear = this.bear;
+    window.bears[window.localBearKey] = this.bear;
+    window.game = this.game;
+    console.log('stored bear with key ' + window.localBearKey);
 
     this.lake = new Lake(this.game, 0, 565, 12600, 70);
     this.game.add.existing(this.lake);
@@ -251,7 +253,7 @@ Game.prototype = {
       }
 
      var game_event = {
-      key: window.localKey,
+      key: window.localBearKey,
       event_type: 0
 
      } 

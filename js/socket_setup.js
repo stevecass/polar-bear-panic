@@ -1,4 +1,9 @@
-    window.localKey = Date.now();
+    function makeBearKey() {
+      return  "br" +Date.now();
+    }
+    window.localBearKey = "br" +Date.now();
+    
+    window.bears = [];
 
     window.socket = io();
 
@@ -7,21 +12,27 @@
     window.BEAR_JUMP = 3;
 
     window.socket.on('game_event', function(game_event){
-        //console.log(game_event);
-        if (game_event.key == window.localKey) {
-          // this is an event from this screen so move our bear
-          //console.log("ours");
-          if (game_event.event_type == BEAR_RUN_LEFT) {
-            window.bear.runLeft();
-          }
-          if (game_event.event_type == BEAR_RUN_RIGHT) {
-            window.bear.runRight();
-          }
-          if (game_event.event_type == BEAR_JUMP) {
-            window.bear.jump();
-            jumpSfx.play('',0,1,false,false);
-          }
-        } else {
-          console.log("Not ours - local key is " + window.localKey + " and event key is " + game_event.local_key);
+      console.log(game_event)
+
+        var targetBear = window.bears[game_event.key];
+        if (!targetBear) {
+          console.log('target bear does not exist. No key ' + game_event.key + " in map ");
+          targetBear = new Bear(this.game, 900, 500);
+          window.game.add.existing(targetBear);
+          var newBearKey = makeBearKey();
+          window.bears[newBearKey] = targetBear;
+        }
+
+        // now give the event to the bear
+
+        if (game_event.event_type == BEAR_RUN_LEFT) {
+          targetBear.runLeft();
+        }
+        if (game_event.event_type == BEAR_RUN_RIGHT) {
+          targetBear.runRight();
+        }
+        if (game_event.event_type == BEAR_JUMP) {
+          targetBear.jump();
+          jumpSfx.play('',0,1,false,false);
         }
       });
